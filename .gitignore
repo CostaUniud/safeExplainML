@@ -1,4 +1,2 @@
-/explainability_results
-/model
-/data
+/data/*
 /__pycache__
