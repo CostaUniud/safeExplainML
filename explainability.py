@@ -35,9 +35,10 @@ def imshow(img, transpose = True):
     plt.show()
 
 # Calling attribute on attribution algorithm defined in input
-def attribute_image_features(algorithm, input, **kwargs):
+def attribute_image_features(algorithm, input, target, **kwargs):
     model.zero_grad()
-    tensor_attributions = algorithm.attribute(input, target=labels[ind], **kwargs)
+
+    tensor_attributions = algorithm.attribute(input, target=target, **kwargs)
     
     return tensor_attributions
 
@@ -47,10 +48,15 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # Resize all images to 32 * 32 and normalize them to mean = 0 and standard-deviation = 1 based on statistics collected from the training set
-    transforms = torchvision.transforms.Compose([
+    normalize = torchvision.transforms.Compose([
         torchvision.transforms.Resize((32, 32)),
         torchvision.transforms.ToTensor(),
         torchvision.transforms.Normalize((0.3337, 0.3064, 0.3171), ( 0.2672, 0.2564, 0.2629))
+    ])
+
+    unnormalize = torchvision.transforms.Compose([
+        torchvision.transforms.Normalize((0., 0., 0.), (1/0.2672, 1/0.2564, 1/0.2629)),
+        torchvision.transforms.Normalize((-0.3337, -0.3064, -0.3171), (1., 1., 1.)),
     ])
 
     # Load the GTSRB test set
@@ -58,13 +64,13 @@ if __name__ == '__main__':
         root = './data',
         split = 'test',
         download = True,
-        transform = transforms
+        transform = normalize
     )
 
     print('Number of test images: {}'.format(len(test_set)))
 
     # Load data from disk and organize it in batches
-    test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=True, num_workers=2)
+    test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
 
     # Instantiate model structure
     model = Net(False)
@@ -101,29 +107,31 @@ if __name__ == '__main__':
     saliency = Saliency(model)
     grads = saliency.attribute(input, target=labels[ind].item())
     grads = np.transpose(grads.squeeze().cpu().detach().numpy(), (1, 2, 0))
+    print(grads)
 
     # Applies integrated gradients attribution algorithm on test image
     ig = IntegratedGradients(model)
-    attr_ig, delta = attribute_image_features(ig, input, baselines=input * 0, return_convergence_delta=True)
+    attr_ig, delta = attribute_image_features(ig, input, labels[ind], baselines=input * 0, return_convergence_delta=True)
     attr_ig = np.transpose(attr_ig.squeeze().cpu().detach().numpy(), (1, 2, 0))
     print('Approximation delta: ', abs(delta))
 
     # Use integrated gradients and noise tunnel with smoothgrad square option on the test image
     ig = IntegratedGradients(model)
     nt = NoiseTunnel(ig)
-    attr_ig_nt = attribute_image_features(nt, input, baselines=input * 0, nt_type='smoothgrad_sq', nt_samples=100, stdevs=0.2)
+    attr_ig_nt = attribute_image_features(nt, input, labels[ind], baselines=input * 0, nt_type='smoothgrad_sq', nt_samples=100, stdevs=0.2)
     attr_ig_nt = np.transpose(attr_ig_nt.squeeze(0).cpu().detach().numpy(), (1, 2, 0))
 
     # Applies DeepLift on test image
     dl = DeepLift(model)
-    attr_dl = attribute_image_features(dl, input, baselines=input * 0)
+    attr_dl = attribute_image_features(dl, input, labels[ind], baselines=input * 0)
     attr_dl = np.transpose(attr_dl.squeeze(0).cpu().detach().numpy(), (1, 2, 0))
 
     # Visualize the attributions for Saliency Maps, DeepLift, Integrated Gradients and Integrated Gradients with SmoothGrad
     print('Original Image')
     print('Predicted:', classes[predicted[ind]], ' Probability:', torch.max(F.softmax(out, 1)).item())
 
-    original_image = np.transpose((images[ind].cpu().detach().numpy() / 2) + 0.5, (1, 2, 0))
+    # original_image = np.transpose((images[ind].cpu().detach().numpy() / 2) + 0.5, (1, 2, 0))
+    original_image = torch.permute(unnormalize(images[ind].cpu().detach()), (1, 2, 0)).numpy()
 
     _ = viz.visualize_image_attr(None, original_image, method="original_image", title="Original Image")
 

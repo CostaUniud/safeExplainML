@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
 
-from data_augmentation import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
+from data import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
 
 # Hyper-parameters
 LEARNING_RATE = 0.0001
@@ -66,7 +66,7 @@ if __name__ == '__main__':
   )
 
   # Classes (43) which images belong to
-  classes_name = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
+  classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
             'End limit 80km', 'Limit 100km', 'Limit 120km', 'No overtaking', 'No overtaking of heavy vehicles', 
             'Intersection with right of way', 'Right of way', 'Give right to pass', 'Stop', 'Transit prohibition', 
             'Prohibition of heavy vehicles transit', 'Wrong way', 'Generic danger', 'Dangerous left curve', 'Dangerous right curve', 
@@ -104,7 +104,7 @@ if __name__ == '__main__':
   # Print image size
   # print(images[0].size())
   # Print labels
-  # print(' '.join('%5s' % classes_name[labels[j]] for j in range(4)))
+  # print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
   # Instantiate model structure
   model = Net()

@@ -7,7 +7,7 @@ from model import Net
 state_dict = 'model_2.pth'
 
 # Classes (43) which images belong to
-classes_name = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
+classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
         'End limit 80km', 'Limit 100km', 'Limit 120km', 'No overtaking', 'No overtaking of heavy vehicles', 
         'Intersection with right of way', 'Right of way', 'Give right to pass', 'Stop', 'Transit prohibition', 
         'Prohibition of heavy vehicles transit', 'Wrong way', 'Generic danger', 'Dangerous left curve', 'Dangerous right curve', 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
   test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=True, num_workers=2)
 
   # Instantiate model structure
-  model = Net()
+  model = Net(True)
 
   # Move the model to the right device
   model = model.to(device)
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
   test_accuracy = 0.0
   # Open a CSV file
-  output_file = open('pred.csv', 'w')
+  output_file = open('wrong.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
@@ -96,14 +96,17 @@ if __name__ == '__main__':
     # Check for incorrect predictions
     if (pred_idxs != y):
       # Write info about predction on CSV file
-      output_file.write("%d,%d,%d,%f\n" % (idx, y, pred_idxs, conf))
+      output_file.write("%d,%s,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf))
 
     # Get the accuracy of one logit and sum with it to that of the others
     test_accuracy += accuracy(probs, y)
 
-  # Close CSV and print final accuracy
-  output_file.close()
   test_accuracy /= len(test_set)
   print('Test accuracy: {:.05f}'.format(test_accuracy))
+
+  output_file.write('Model accuracy\n')
+  output_file.write("%f" % (test_accuracy))
+  # Close CSV and print final accuracy
+  output_file.close()
 
 # %%
