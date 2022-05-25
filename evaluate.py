@@ -4,7 +4,7 @@ import torchvision
 from model import Net
 
 # Model file to evaluate
-state_dict = 'model_2.pth'
+state_dict = 'model_15.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -69,7 +69,7 @@ if __name__ == '__main__':
   model = model.to(device)
 
   # Load the model from file
-  model.load_state_dict(torch.load('./model/' + state_dict))
+  model.load_state_dict(torch.load('./model2/' + state_dict))
 
   # Set themodel in evaluation mode
   model.eval()

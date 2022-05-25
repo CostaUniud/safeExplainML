@@ -1,14 +1,5 @@
 import numpy as np
-
-# with open('test.npy', 'wb') as f:
-#     np.save(f, np.array([1, 2]))
-#     np.save(f, np.array([1, 3]))
-
-# with open('test.npy', 'rb') as f:
-#     a = np.load(f)
-#     b = np.load(f)
-
-# print(a, b)
+import os
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -20,8 +11,15 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
-
-with open('labels.npy', 'rb') as f:
-    for c in classes:
-        a = np.load(f, allow_pickle=True)
-        print(a)
+# Save in a NPY file captum attributes
+with open('data.npy', 'wb') as f:
+    for subdirs, dirs, files in os.walk('.\explainability\\'):
+        for filename in files:
+            if filename.endswith('.npy'):
+                # print('filename', filename)
+                print(subdirs + '\\' + filename)
+                with open(subdirs + '\\' + filename, 'rb') as g:
+                    for c in classes:
+                        a = np.load(g, allow_pickle=True)
+                        np.save(f, a)
+                        # print(a[16,16,-1])

@@ -1,2 +1,7 @@
 /data/*
 /__pycache__
+/model2/*
+/model/*
+/explainability/*
+/data_def.npy
+/labels_def.npy
