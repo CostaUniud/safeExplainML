@@ -13,7 +13,7 @@ from captum.attr import NoiseTunnel
 from captum.attr import visualization as viz
 
 # Model file to evaluate
-state_dict = 'model_2.pth'
+state_dict = 'model.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -24,27 +24,6 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Pedestrian crossing', 'School', 'Cycle crossing', 'Snow', 'Wild animals', 'Go ahead', 'Right turn mandatory', 
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
-
-# Show an image
-# def accuracy(preds, labels):
-#   """
-#   Computes the accuracy between preds and labels
-
-#   preds: 
-#     torch.tensor of size (B, N) where B is the batch size 
-#     and N is the number of classes
-#     it contains the predicted probabilities for each class
-#   labels:
-#     torch.tensor of size (B) where each item is an integer 
-#     taking value in [0,N-1]
-
-#   Returns:
-#     the accuracy between preds and labels
-#   """
-#   _, pred_idxs = torch.max(preds.data, 1)
-#   correct = (pred_idxs == labels).sum()
-#   total = labels.size(0)
-#   return float(correct) / total
 
 # Calling attribute on attribution algorithm defined in input
 def attribute_image_features(algorithm, input, target, **kwargs):
@@ -102,15 +81,8 @@ if __name__ == '__main__':
   # Set themodel in evaluation mode
   model.eval()
 
-  # test_accuracy = 0.0
-  # Open a CSV file
-  # output_file = open('pred.csv', 'w')
-  # output_file.write('Filename,ClassId,Pred,Conf\n')
-
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
-    if idx < 12351:
-      continue
 
     x, y = batch
 
@@ -129,9 +101,7 @@ if __name__ == '__main__':
 
     model.eval()
 
-    # original_image = np.transpose((input[0].cpu().detach().numpy() / 2) + 0.5, (1, 2, 0))
     original_image = torch.permute(unnormalize(input[0].cpu().detach()), (1, 2, 0)).numpy()
-    # original_image = np.array(test_set2[idx][0])
 
     # Create folder to save captum results
     directory = 'sample_' + str(idx)
@@ -139,9 +109,8 @@ if __name__ == '__main__':
     path = os.path.join(parent_dir, directory)
     os.mkdir(path)
 
-    # Save in a CSV file captum attributes
+    # Save captum results on npy files
     with open(path + '/data' + str(idx) + '.npy', 'wb') as f:
-
       # For each class
       for id, c in enumerate(classes):
 
@@ -192,20 +161,5 @@ if __name__ == '__main__':
         # _ = viz.visualize_image_attr(attr_dl, original_image, method="blended_heat_map", sign="all", show_colorbar=True, 
         #                         title="Overlayed DeepLift")
         # _[0].savefig(sub_path + '/overlayed_deepLift')
-
-    # Write info about predction on CSV file
-    # output_file.write("%d,%s,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf))
-
-    # Get the accuracy of one logit and sum with it to that of the others
-    # test_accuracy += accuracy(probs, y)
-
-  # Calculate final accuracy
-  # test_accuracy /= len(test_set)
-  # print('Test accuracy: {:.05f}'.format(test_accuracy))
-
-  # output_file.write('Model accuracy\n')
-  # output_file.write("%f" % (test_accuracy))
-  # Close CSV and print final accuracy
-  # output_file.close()
 
 # %%

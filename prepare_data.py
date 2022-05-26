@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 import os
 
@@ -11,15 +12,37 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
+c = np.arange(132096) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
+c = c.reshape((1, 32, 32, 129))
+c = np.zeros_like(c)
+
+l = np.array([0]) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
+
 # Save in a NPY file captum attributes
 with open('data.npy', 'wb') as f:
-    for subdirs, dirs, files in os.walk('.\explainability\\'):
+    for root, dirs, files in os.walk('.\explainability\\'):
         for filename in files:
             if filename.endswith('.npy'):
                 # print('filename', filename)
-                print(subdirs + '\\' + filename)
-                with open(subdirs + '\\' + filename, 'rb') as g:
-                    for c in classes:
+                # print(root + '\\' + filename)
+                with open(root + '\\' + filename, 'rb') as g:
+                    first_time = True
+                    for id, classe in enumerate(classes):
                         a = np.load(g, allow_pickle=True)
-                        np.save(f, a)
-                        # print(a[16,16,-1])
+                        if first_time:
+                            b = np.copy(a)
+                            first_time = False
+                        else:
+                            b = np.concatenate((b, a), axis=2)
+                    # print(b.shape)
+                    c = np.concatenate((c, [b]))
+                    print(c.shape)
+                    x = np.load('labels_new.npy', allow_pickle=True)
+                    # print(x)
+                    l = np.concatenate((l, np.array([x[int(filename[4:-4])]])))
+                    print(l.shape)
+                    # print(l)
+    np.save(f, c)
+np.save('labels.npy', l)
+
+# %%

@@ -1,10 +1,10 @@
 #%%
 import torch
 import torchvision
-from model import Net
+from model_explain import Net
 
 # Model file to evaluate
-state_dict = 'model.pth'
+state_dict = 'model_39.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -69,19 +69,22 @@ if __name__ == '__main__':
   model = model.to(device)
 
   # Load the model from file
-  model.load_state_dict(torch.load('./model/' + state_dict))
+  model.load_state_dict(torch.load('./model2/' + state_dict))
 
   # Set themodel in evaluation mode
   model.eval()
 
   test_accuracy = 0.0
   # Open a CSV file
-  output_file = open('pred.csv', 'w')
+  output_file = open('explain.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
-    x, y = batch
+    z, y = batch
+    # print(z.size())
+    x = z.repeat(1, 43, 1, 1)
+    # print(x.size())
 
     # Move the data to the right device
     x, y = x.to(device), y.to(device)

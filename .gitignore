@@ -5,3 +5,8 @@
 /explainability/*
 /data_def.npy
 /labels_def.npy
+/prove.ipynb
+/uncertainty.py
+/uncertainty.csv
+/explain.csv
+/read.py

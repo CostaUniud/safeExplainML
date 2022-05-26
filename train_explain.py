@@ -1,26 +1,14 @@
 # %%
 import torch
-import torchvision
-from torch.utils.data import Dataset
-
 from model_explain import Net
 import torch.nn.functional as F
 
 import numpy as np
-import matplotlib.pyplot as plt
-
-from data_augmentation import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
 
 # Hyper-parameters
 LEARNING_RATE = 0.0001
 BATCH_SIZE = 64
 EPOCHS = 40
-
-# Show an image
-def imshow(img):
-  img = img / 2 + 0.5     # unnormalize
-  npimg = img.numpy()
-  plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
 # Calculate accuracy
 def accuracy(preds, labels):
@@ -43,27 +31,6 @@ def accuracy(preds, labels):
   total = labels.size(0)
   return float(correct) / total
 
-class CustomTensorDataset(Dataset):
-  def __init__(self, x, y, transform_list=None):
-    X_tensor, y_tensor = torch.tensor(np.load(x)), torch.tensor(np.load(y))
-    tensors = (X_tensor, y_tensor)
-    assert (X_tensor.size(0) == y_tensor.size(0))
-    self.tensors = tensors
-    self.transforms = transform_list
-
-  def __getitem__(self, index):
-    x = self.tensors[0][index]
-
-    if self.transforms:
-      x = self.transforms(x)
-
-    y = self.tensors[1][index]
-
-    return x, y
-
-  def __len__(self):
-    return self.tensors[0].size(0)
-
 # Main
 if __name__ == '__main__':
   # Fix the seed
@@ -72,17 +39,6 @@ if __name__ == '__main__':
   # Define the device where we want run our model
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-  # Resize all images to 32 * 32 and normalize them to mean = 0 and standard-deviation = 1 based on statistics collected from the training set
-  transforms = torchvision.transforms.Compose([
-    torchvision.transforms.ToPILImage(),
-    torchvision.transforms.Resize((32, 32)),
-    torchvision.transforms.ToTensor(),
-    torchvision.transforms.Normalize((0.3337, 0.3064, 0.3171), ( 0.2672, 0.2564, 0.2629))
-  ])
-
-  # train_set = MyDataSet('data.npy', 'labels_new.npy')
-
-  # train_set = CustomTensorDataset(x='data_def.npy', y = 'labels_def.npy', transform_list = transforms)
   train_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('data_def.npy')), torch.LongTensor(np.load('labels_def.npy')))
 
   # Classes (43) which images belong to
@@ -99,18 +55,6 @@ if __name__ == '__main__':
   train_loader = torch.utils.data.DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=6)
 
   print('Number of training images: {}'.format(len(train_set)))
-
-  # Get some random training images to show
-  dataiter = iter(train_loader)
-  images, labels = dataiter.next()
-  print(images.shape)
-  # images, labels = images[:4], labels[:4]
-  # # Show images
-  # imshow(torchvision.utils.make_grid(images))
-  # # Print image size
-  # print(images[0].size())
-  # # Print labels
-  # print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
   # Instantiate model structure
   model = Net()
@@ -129,7 +73,7 @@ if __name__ == '__main__':
   for e in range(EPOCHS):
     for i, batch in enumerate(train_loader):
       x, y = batch
-      x = torch.permute(x, (0, 3, 1, 2))
+      x = torch.permute(x, (0, 3, 1, 2)) # 129x32x32
 
       # Move the data to the right device
       x, y = x.to(device), y.to(device)
