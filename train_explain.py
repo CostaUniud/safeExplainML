@@ -1,9 +1,13 @@
 # %%
 import torch
 import torchvision
-from model_explain import Net
 import torch.nn.functional as F
+
+from model_explain import Net
+
 import numpy as np
+
+import matplotlib.pyplot as plt
 
 # Hyper-parameters
 LEARNING_RATE = 0.0001
@@ -87,7 +91,7 @@ if __name__ == '__main__':
               'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
   # Load data from disk and organize it in batches
-  train_loader = torch.utils.data.DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=6)
+  train_loader = torch.utils.data.DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
   print('Number of training images: {}'.format(len(train_set)))
 
@@ -104,8 +108,14 @@ if __name__ == '__main__':
   # Set the model in training mode
   model.train()
 
+  # Set loss and acc values arrays for visualization purpose
+  loss_vals = []
+  acc_vals = []
+
   # Train the model
   for e in range(EPOCHS):
+    epoch_loss = []
+    epoch_acc = []
     for i, batch in enumerate(train_loader):
       x, y = batch
       x = torch.permute(x, (0, 3, 1, 2)) # 129x32x32
@@ -123,21 +133,36 @@ if __name__ == '__main__':
       # Perfom the update of the model's parameter using the optimizer
       optimizer.zero_grad() # Clean previous gradients
       loss.backward()
+      epoch_loss.append(loss.item())
       optimizer.step()
+
+      # Obtain probabilities over the logits
+      a = accuracy(torch.softmax(out, dim=1), y)
+      epoch_acc.append(a)
 
       # Print information about the training
       if i % 100 == 0:
-        # Obtain probabilities over the logits
-        a = accuracy(torch.softmax(out, dim=1), y)
         print('Loss: {:.05f} - Accuracy {:.05f}'.format(loss.item(), a))
 
+    loss_vals.append(sum(epoch_loss)/len(epoch_loss))
+    acc_vals.append(sum(epoch_acc)/len(epoch_acc))
     print('Epoch {} done!'.format(e))
 
   # Save the model
   model_file = 'model.pth'
-  torch.save(model.state_dict(), './model3/' + model_file)
+  torch.save(model.state_dict(), './model2/' + model_file)
 
   print('Training done!')
+
+  # Plot accuracy and loss values for each epoch
+  plt.figure(figsize=(10,5))
+  plt.title("Training loss and accuracy")
+  plt.plot(loss_vals, label="loss")
+  plt.plot(acc_vals, label="accuray")
+  plt.xlabel("Epochs")
+  plt.ylabel("Loss / Accuracy")
+  plt.legend()
+  plt.show()
 
 
 
