@@ -4,9 +4,11 @@
 /model/*
 /explainability/*
 /data_def.npy
+/labels.npy
 /labels_def.npy
-/prove.ipynb
+/utils/prove.ipynb
 /uncertainty.py
 /uncertainty.csv
 /explain.csv
-/read.py
+/utils/read.py
+/model3

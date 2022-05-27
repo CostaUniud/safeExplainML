@@ -7,9 +7,9 @@ import numpy as np
 import os
 
 from captum.attr import IntegratedGradients
-from captum.attr import Saliency
-from captum.attr import DeepLift
-from captum.attr import NoiseTunnel
+# from captum.attr import Saliency
+# from captum.attr import DeepLift
+# from captum.attr import NoiseTunnel
 from captum.attr import visualization as viz
 
 # Model file to evaluate
@@ -58,11 +58,11 @@ if __name__ == '__main__':
     transform = normalize
   )
 
-  test_set2 = torchvision.datasets.GTSRB(
-    root = './data',
-    split = 'test',
-    download = False
-  )
+  # test_set2 = torchvision.datasets.GTSRB(
+  #   root = './data',
+  #   split = 'test',
+  #   download = False
+  # )
 
   print('Number of test images: {}'.format(len(test_set)))
 
@@ -70,7 +70,7 @@ if __name__ == '__main__':
   test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
 
   # Instantiate model structure
-  model = Net(False)
+  model = Net(inplace_mode = False)
 
   # Move the model to the right device
   model = model.to(device)
@@ -78,13 +78,15 @@ if __name__ == '__main__':
   # Load the model from file
   model.load_state_dict(torch.load('./model/' + state_dict))
 
-  # Set themodel in evaluation mode
-  model.eval()
+  # Create empty array to save labels
+  a = np.empty([])
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
-
     x, y = batch
+
+    # Append label value to labels array
+    a = np.append(a, np.array(y))
 
     # Move the data to the right device
     x, y = x.to(device), y.to(device)
@@ -99,6 +101,7 @@ if __name__ == '__main__':
     input = x
     input.requires_grad = True
 
+    # Set the model in evaluation mode
     model.eval()
 
     original_image = torch.permute(unnormalize(input[0].cpu().detach()), (1, 2, 0)).numpy()
@@ -130,6 +133,7 @@ if __name__ == '__main__':
         ig = IntegratedGradients(model)
         attr_ig, delta = attribute_image_features(ig, input, id, baselines=input * 0, return_convergence_delta=True)
         attr_ig = np.transpose(attr_ig.squeeze().cpu().detach().numpy(), (1, 2, 0))
+        # Save np array with results
         np.save(f, attr_ig)
 
         # Use integrated gradients and noise tunnel with smoothgrad square option on the test image
@@ -161,5 +165,8 @@ if __name__ == '__main__':
         # _ = viz.visualize_image_attr(attr_dl, original_image, method="blended_heat_map", sign="all", show_colorbar=True, 
         #                         title="Overlayed DeepLift")
         # _[0].savefig(sub_path + '/overlayed_deepLift')
+
+  # Save labels array in a npy file
+  np.save('labels.npy', a)
 
 # %%

@@ -24,16 +24,16 @@ class Net(nn.Module):
         self.localization = nn.Sequential(
             nn.Conv2d(3, 8, kernel_size=7),
             nn.MaxPool2d(2, stride=2),
-            nn.ReLU(inplace=self.inplace_mode), # Set to True for training
+            nn.ReLU(inplace=self.inplace_mode),
             nn.Conv2d(8, 10, kernel_size=5),
             nn.MaxPool2d(2, stride=2),
-            nn.ReLU(inplace=self.inplace_mode) # Set to True for training
+            nn.ReLU(inplace=self.inplace_mode)
             )
 
         # Regressor for the 3 * 2 affine matrix
         self.fc_loc = nn.Sequential(
             nn.Linear(10 * 4 * 4, 32),
-            nn.ReLU(inplace=self.inplace_mode), # Set to True for training
+            nn.ReLU(inplace=self.inplace_mode),
             nn.Linear(32, 3 * 2)
             )
    
@@ -57,11 +57,11 @@ class Net(nn.Module):
         x = self.stn(x)
 
         # Perform forward pass
-        x = self.bn1(F.max_pool2d(F.leaky_relu(self.conv1(x), inplace=self.inplace_mode), 2)) # Set to True for training
+        x = self.bn1(F.max_pool2d(F.leaky_relu(self.conv1(x), inplace=self.inplace_mode), 2))
         x = self.conv_drop(x)
-        x = self.bn2(F.max_pool2d(F.leaky_relu(self.conv2(x), inplace=self.inplace_mode), 2)) # Set to True for training
+        x = self.bn2(F.max_pool2d(F.leaky_relu(self.conv2(x), inplace=self.inplace_mode), 2))
         x = self.conv_drop(x)
-        x = self.bn3(F.max_pool2d(F.leaky_relu(self.conv3(x), inplace=self.inplace_mode), 2)) # Set to True for training
+        x = self.bn3(F.max_pool2d(F.leaky_relu(self.conv3(x), inplace=self.inplace_mode), 2))
         x = self.conv_drop(x)
         x = x.view(-1, 250*2*2) # Tensor linearization
         x = F.relu(self.fc1(x), inplace=self.inplace_mode)
