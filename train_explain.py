@@ -1,12 +1,11 @@
 # %%
+
+# Train second model with explainability data
 import torch
 import torchvision
 import torch.nn.functional as F
-
 from model_explain import Net
-
 import numpy as np
-
 import matplotlib.pyplot as plt
 
 # Hyper-parameters

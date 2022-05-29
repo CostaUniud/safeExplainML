@@ -10,3 +10,8 @@
 /adv.ipynb
 /explain.csv
 /utils/read.py
+/uncertainty.npy
+/uncertainty_2.npy
+/wrong.csv
+/pred.csv
+/explain.csv

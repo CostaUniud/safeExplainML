@@ -1,11 +1,11 @@
 #%%
 
+# Compute input feature importance with Captum library
 import torch
 import torchvision
 from model import Net
 import numpy as np
 import os
-
 from captum.attr import IntegratedGradients
 # from captum.attr import Saliency
 # from captum.attr import DeepLift

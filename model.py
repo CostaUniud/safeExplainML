@@ -1,4 +1,6 @@
 # Source https://github.com/poojahira/gtsrb-pytorch/blob/master/model.py
+
+# Main model structure
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

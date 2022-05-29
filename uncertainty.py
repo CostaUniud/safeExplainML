@@ -58,7 +58,8 @@ if __name__ == '__main__':
   # Load the model from file
   model.load_state_dict(torch.load('./model/' + state_dict))
 
-  for i in range(100):
+  # Performe i forward passes to uncertainty estimation
+  for i in range(100): # 5
     predictions = np.empty((0, 43))
     # Set the model in evaluation mode
     model.eval()

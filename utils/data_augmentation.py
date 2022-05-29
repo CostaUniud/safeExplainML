@@ -1,6 +1,5 @@
-import torchvision.transforms as transforms
-
 # Data augmentation for training
+import torchvision.transforms as transforms
 
 # Resize all images to 32 * 32 and normalize them to mean = 0 and standard-deviation = 1 based on statistics collected from the training set
 data_transforms = transforms.Compose([

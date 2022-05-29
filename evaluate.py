@@ -1,12 +1,15 @@
 #%%
+
+# Evaluate performance model
 import torch
 import torchvision
-from model import Net
-from sklearn.metrics import roc_auc_score
+from model import Net # from model_explain import Net (for second model)
+from sklearn.metrics import precision_recall_curve, average_precision_score, roc_auc_score, PrecisionRecallDisplay
+from sklearn.preprocessing import label_binarize
 import numpy as np
 
 # Model file path
-state_dict = './model2/model.pth'
+state_dict = './model/model.pth' # './model2/model.pth' (for second model)
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -76,22 +79,21 @@ if __name__ == '__main__':
   # Set themodel in evaluation mode
   model.eval()
 
+  # Inizializate variables to compute evaluation metrics
   test_accuracy = 0.0
-
-  y_test = []
-  y_prob = np.empty((0,43), float)
+  target = []
+  pred = np.empty((0,43), float)
 
   # Open a CSV file
-  output_file = open('explain.csv', 'w')
+  output_file = open('pred.csv', 'w') # open('explain.csv', 'w') (for second model)
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
-    # x, y = batch
-    z, y = batch
+    x, y = batch
 
-    # Generate 129x32x32 maps from 3x32x32
-    x = z.repeat(1, 43, 1, 1)
+    # Generate 129x32x32 maps from 3x32x32 (for second model)
+    # x = x.repeat(1, 43, 1, 1)
 
     # Move the data to the right device
     x, y = x.to(device), y.to(device)
@@ -103,8 +105,9 @@ if __name__ == '__main__':
     probs = torch.softmax(out, dim=1)
     conf, pred_idxs = torch.max(probs.data, 1)
 
-    y_test = np.append(y_test, y.item())
-    y_prob = np.append(y_prob, probs.cpu().detach().numpy(), axis=0)
+    # Append current label and prediction values
+    target = np.append(target, y.item())
+    pred = np.append(pred, probs.cpu().detach().numpy(), axis=0)
 
     # Check for incorrect predictions
     # if (pred_idxs != y):
@@ -115,20 +118,19 @@ if __name__ == '__main__':
     # Get the accuracy of one logit and sum with it to that of the others
     test_accuracy += accuracy(probs, y)
 
+  # Compute accuracy
   test_accuracy /= len(test_set)
   print('Test accuracy: {:.05f}'.format(test_accuracy))
-
-  output_file.write('Model accuracy\n')
-  output_file.write("%f" % (test_accuracy))
+  output_file.write('Test accuracy: {:.05f}'.format(test_accuracy))
 
   # Compute ROC AUC
-  macro_roc_auc_ovo = roc_auc_score(y_test, y_prob, multi_class="ovo", average="macro")
+  macro_roc_auc_ovo = roc_auc_score(target, pred, multi_class="ovo", average="macro")
   weighted_roc_auc_ovo = roc_auc_score(
-    y_test, y_prob, multi_class="ovo", average="weighted"
+    target, pred, multi_class="ovo", average="weighted"
   )
-  macro_roc_auc_ovr = roc_auc_score(y_test, y_prob, multi_class="ovr", average="macro")
+  macro_roc_auc_ovr = roc_auc_score(target, pred, multi_class="ovr", average="macro")
   weighted_roc_auc_ovr = roc_auc_score(
-    y_test, y_prob, multi_class="ovr", average="weighted"
+    target, pred, multi_class="ovr", average="weighted"
   )
   print(
     "One-vs-One ROC AUC scores:\n{:.6f} (macro),\n{:.6f} "
@@ -147,7 +149,33 @@ if __name__ == '__main__':
     "(weighted by prevalence)".format(macro_roc_auc_ovr, weighted_roc_auc_ovr)
   )
 
-  # Close CSV and print final accuracy
+  # Compute and plot precision-recall curve
+  precision = dict()
+  recall = dict()
+  average_precision = dict()
+
+  target = label_binarize(target, classes=np.arange(43))
+  
+  # For each class
+  for i in range(43):
+    precision[i], recall[i], _ = precision_recall_curve(target[:, i], pred[:, i])
+    average_precision[i] = average_precision_score(target[:, i], pred[:, i])
+
+  # A "micro-average": quantifying score on all classes jointly
+  precision["micro"], recall["micro"], _ = precision_recall_curve(
+    target.ravel(), pred.ravel()
+  )
+  average_precision["micro"] = average_precision_score(target, pred, average="micro")
+
+  display = PrecisionRecallDisplay(
+    recall=recall["micro"],
+    precision=precision["micro"],
+    average_precision=average_precision["micro"],
+  )
+  display.plot()
+  _ = display.ax_.set_title("Micro-averaged over all classes")
+
+  # Close CSV
   output_file.close()
 
 
