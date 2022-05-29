@@ -79,7 +79,7 @@ if __name__ == '__main__':
   model.load_state_dict(torch.load('./model/' + state_dict))
 
   # Create empty array to save labels
-  a = np.empty([])
+  a = []
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):

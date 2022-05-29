@@ -14,13 +14,11 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
-# A support np array x to start the concatenation 
-x = np.arange(132096) 
-x = x.reshape((1, 32, 32, 129))
-x = np.zeros_like(x)
+# A support np array x to start the concatenation
+x = np.empty((0, 32, 32, 129), float)
 
 # A support np array y to start the concatenation for labels
-y = np.array([0])
+y = []
 
 # Load np array with labels that need to be re-ordered depending on the order in which we concatenate the samples 
 z = np.load('labels.npy', allow_pickle=True)
@@ -45,7 +43,7 @@ for root, dirs, files in os.walk('.\explainability\\'):
                         b = np.copy(a)
                         first_time = False
                     else:
-                        b = np.concatenate((b, a), axis=2) # 
+                        b = np.concatenate((b, a), axis = 2) 
                 # Concatenate in a global array x with initial shape 1x32x32x129
                 x = np.concatenate((x, [b]))
                 # Concatenate the new ordered labels

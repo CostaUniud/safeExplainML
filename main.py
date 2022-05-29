@@ -17,7 +17,7 @@ EPOCHS = 40
 
 # Show an image
 def imshow(img):
-  img = img / 2 + 0.5     # unnormalize
+  img = unnormalize(img)     # unnormalize
   npimg = img.numpy()
   plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
@@ -55,6 +55,12 @@ if __name__ == '__main__':
     torchvision.transforms.Resize((32, 32)),
     torchvision.transforms.ToTensor(),
     torchvision.transforms.Normalize((0.3337, 0.3064, 0.3171), ( 0.2672, 0.2564, 0.2629))
+  ])
+
+  # Unnormalize transforms
+  unnormalize = torchvision.transforms.Compose([
+    torchvision.transforms.Normalize((0., 0., 0.), (1/0.2672, 1/0.2564, 1/0.2629)),
+    torchvision.transforms.Normalize((-0.3337, -0.3064, -0.3171), (1., 1., 1.)),
   ])
 
   # Load the GTSRB training set

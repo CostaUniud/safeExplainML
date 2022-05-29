@@ -2,9 +2,11 @@
 import torch
 import torchvision
 from model import Net
+from sklearn.metrics import roc_auc_score
+import numpy as np
 
 # Model file path
-state_dict = './model/model.pth'
+state_dict = './model2/model.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -75,12 +77,17 @@ if __name__ == '__main__':
   model.eval()
 
   test_accuracy = 0.0
+
+  y_test = []
+  y_prob = np.empty((0,43), float)
+
   # Open a CSV file
   output_file = open('explain.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
+    # x, y = batch
     z, y = batch
 
     # Generate 129x32x32 maps from 3x32x32
@@ -96,8 +103,12 @@ if __name__ == '__main__':
     probs = torch.softmax(out, dim=1)
     conf, pred_idxs = torch.max(probs.data, 1)
 
+    y_test = np.append(y_test, y.item())
+    y_prob = np.append(y_prob, probs.cpu().detach().numpy(), axis=0)
+
     # Check for incorrect predictions
     # if (pred_idxs != y):
+    
     # Write info about predction on CSV file
     output_file.write("%d,%s,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf))
 
@@ -109,7 +120,35 @@ if __name__ == '__main__':
 
   output_file.write('Model accuracy\n')
   output_file.write("%f" % (test_accuracy))
+
+  # Compute ROC AUC
+  macro_roc_auc_ovo = roc_auc_score(y_test, y_prob, multi_class="ovo", average="macro")
+  weighted_roc_auc_ovo = roc_auc_score(
+    y_test, y_prob, multi_class="ovo", average="weighted"
+  )
+  macro_roc_auc_ovr = roc_auc_score(y_test, y_prob, multi_class="ovr", average="macro")
+  weighted_roc_auc_ovr = roc_auc_score(
+    y_test, y_prob, multi_class="ovr", average="weighted"
+  )
+  print(
+    "One-vs-One ROC AUC scores:\n{:.6f} (macro),\n{:.6f} "
+    "(weighted by prevalence)".format(macro_roc_auc_ovo, weighted_roc_auc_ovo)
+  )
+  print(
+    "One-vs-Rest ROC AUC scores:\n{:.6f} (macro),\n{:.6f} "
+    "(weighted by prevalence)".format(macro_roc_auc_ovr, weighted_roc_auc_ovr)
+  )
+  output_file.write(
+    "\nOne-vs-One ROC AUC scores:\n{:.6f} (macro),\n{:.6f} "
+    "(weighted by prevalence)".format(macro_roc_auc_ovo, weighted_roc_auc_ovo)
+  )
+  output_file.write(
+    "\nOne-vs-Rest ROC AUC scores:\n{:.6f} (macro),\n{:.6f} "
+    "(weighted by prevalence)".format(macro_roc_auc_ovr, weighted_roc_auc_ovr)
+  )
+
   # Close CSV and print final accuracy
   output_file.close()
+
 
 # %%

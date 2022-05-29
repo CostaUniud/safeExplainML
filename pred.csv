@@ -12631,3 +12631,9 @@ Filename,ClassId,Pred,Conf
 12629,No overtaking of heavy vehicles,No overtaking of heavy vehicles,0.999998
 Model accuracy
 0.985352
+One-vs-One ROC AUC scores:
+0.999856 (macro),
+0.999887 (weighted by prevalence)
+One-vs-Rest ROC AUC scores:
+0.999869 (macro),
+0.999933 (weighted by prevalence)

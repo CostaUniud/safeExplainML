@@ -7,8 +7,6 @@
 /labels.npy
 /labels_def.npy
 /utils/prove.ipynb
-/uncertainty.py
-/uncertainty.csv
+/adv.ipynb
 /explain.csv
 /utils/read.py
-/model3
