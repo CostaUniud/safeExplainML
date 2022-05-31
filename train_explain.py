@@ -77,7 +77,7 @@ if __name__ == '__main__':
         0.1699, 0.1693, 0.1254))
   ])
 
-  train_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('data_def.npy')), torch.LongTensor(np.load('labels_def.npy')))
+  train_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('data_train.npy')), torch.LongTensor(np.load('labels_train.npy')))
 
   # Classes (43) which images belong to
   classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     print('Epoch {} done!'.format(e))
 
   # Save the model
-  model_file = 'model.pth'
+  model_file = 'model2.pth'
   torch.save(model.state_dict(), './model2/' + model_file)
 
   print('Training done!')

@@ -14,12 +14,6 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
-# c = np.arange(132096) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
-# c = c.reshape((1, 32, 32, 129))
-# c = np.zeros_like(c)
-
-# l = np.array([0]) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
-
 # A support np array x to start the concatenation
 x = np.empty((0, 32, 32, 129), float)
 
@@ -36,7 +30,7 @@ z = np.load('labels.npy', allow_pickle=True)
 #                       -> sample_12659 (directory) -> data12659.npy (file)
 
 # Concatenate np arrays of captum results and put labels in correct order
-for root, dirs, files in os.walk('.\explainability\\'):  
+for root, dirs, files in os.walk('.\explainability_train\\'):  
     for filename in files:
         if filename.endswith('.npy'):
             # Open npy file

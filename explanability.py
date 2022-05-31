@@ -1,6 +1,7 @@
 #%%
 
 # Compute input feature importance with Captum library
+# from matplotlib import transforms
 import torch
 import torchvision
 from model import Net
@@ -10,7 +11,9 @@ from captum.attr import IntegratedGradients
 # from captum.attr import Saliency
 # from captum.attr import DeepLift
 # from captum.attr import NoiseTunnel
-from captum.attr import visualization as viz
+# from captum.attr import visualization as viz
+from utils.data_augmentation import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
+
 
 # Model file to evaluate
 state_dict = 'model.pth'
@@ -50,13 +53,21 @@ if __name__ == '__main__':
     torchvision.transforms.Normalize((-0.3337, -0.3064, -0.3171), (1., 1., 1.)),
   ])
 
-  # Load the GTSRB test set
-  test_set = torchvision.datasets.GTSRB(
+  # Load the GTSRB training set
+  train_set = torchvision.datasets.GTSRB(
     root = './data',
-    split = 'test',
+    split = 'train',
     download = True,
     transform = normalize
   )
+
+  # Load the GTSRB test set
+  # test_set = torchvision.datasets.GTSRB(
+  #   root = './data',
+  #   split = 'test',
+  #   download = True,
+  #   transform = normalize
+  # )
 
   # test_set2 = torchvision.datasets.GTSRB(
   #   root = './data',
@@ -64,10 +75,28 @@ if __name__ == '__main__':
   #   download = False
   # )
 
-  print('Number of test images: {}'.format(len(test_set)))
+  # Load data from disk and organize it in batches
+  train_loader = torch.utils.data.DataLoader(
+    torch.utils.data.ConcatDataset([
+      train_set, 
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_hue),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_brightness),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_saturation),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_contrast),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_rotate),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hvflip),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_shear),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_translate),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_center),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hflip),
+      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_vflip)
+      ]), 
+      batch_size=1, shuffle=True, num_workers=2)
+
+  print('Number of test images: {}'.format(len(train_loader)))
 
   # Load data from disk and organize it in batches
-  test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
+  # test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
 
   # Instantiate model structure
   model = Net(inplace_mode = False)
@@ -82,7 +111,7 @@ if __name__ == '__main__':
   a = []
 
   # Evaluate the model
-  for idx, batch in enumerate(test_loader):
+  for idx, batch in enumerate(train_loader):
     x, y = batch
 
     # Append label value to labels array
@@ -95,8 +124,8 @@ if __name__ == '__main__':
     out = model(x)
 
     # Get predictions values
-    probs = torch.softmax(out, dim=1)
-    conf, pred_idxs = torch.max(probs.data, 1)
+    #  probs = torch.softmax(out, dim=1)
+    #  conf, pred_idxs = torch.max(probs.data, 1)
 
     input = x
     input.requires_grad = True
@@ -104,24 +133,24 @@ if __name__ == '__main__':
     # Set the model in evaluation mode
     model.eval()
 
-    original_image = torch.permute(unnormalize(input[0].cpu().detach()), (1, 2, 0)).numpy()
+    # original_image = torch.permute(unnormalize(input[0].cpu().detach()), (1, 2, 0)).numpy()
 
     # Create folder to save captum results
-    directory = 'sample_' + str(idx)
-    parent_dir = 'explainability/'
-    path = os.path.join(parent_dir, directory)
-    os.mkdir(path)
+    # directory = 'sample_' + str(idx)
+    parent_dir = 'explainability_train/'
+    # path = os.path.join(parent_dir, directory)
+    # os.mkdir(path)
 
     # Save captum results on npy files
-    with open(path + '/data' + str(idx) + '.npy', 'wb') as f:
+    with open(parent_dir + '/data' + str(idx) + '.npy', 'wb') as f:
       # For each class
       for id, c in enumerate(classes):
 
         # Create sub-folder to save captum results
-        sub_directory = 'class_' + str(id)
-        parent_dir = path
-        sub_path = os.path.join(parent_dir, sub_directory)
-        os.mkdir(sub_path)
+        # sub_directory = 'class_' + str(id)
+        # parent_dir = path
+        # sub_path = os.path.join(parent_dir, sub_directory)
+        # os.mkdir(sub_path)
 
         # Computes gradients with respect to class ind and transposes them for visualization purposes
         # saliency = Saliency(model)
@@ -155,9 +184,9 @@ if __name__ == '__main__':
         # _ = viz.visualize_image_attr(grads, original_image, method="blended_heat_map", sign="absolute_value",
         #                         show_colorbar=True, title="Overlayed Gradient Magnitudes")
         # _[0].savefig(sub_path + '/overlayed_gradient_magnitudes.png')
-        _ = viz.visualize_image_attr(attr_ig, original_image, method="blended_heat_map", sign="all",
-                                show_colorbar=True, title="Overlayed Integrated Gradients")
-        _[0].savefig(sub_path + '/overlayed_integrated_gradients.png')
+        # _ = viz.visualize_image_attr(attr_ig, original_image, method="blended_heat_map", sign="all",
+        #                         show_colorbar=True, title="Overlayed Integrated Gradients")
+        # _[0].savefig(sub_path + '/overlayed_integrated_gradients.png')
         # _ = viz.visualize_image_attr(attr_ig_nt, original_image, method="blended_heat_map", sign="absolute_value", 
         #                             outlier_perc=10, show_colorbar=True, 
         #                             title="Overlayed Integrated Gradients \n with SmoothGrad Squared")
