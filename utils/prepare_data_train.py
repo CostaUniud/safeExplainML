@@ -47,10 +47,10 @@ for root, dirs, files in os.walk('.\explainability_train\\'):
                 # Concatenate in a global array x with initial shape 1x32x32x129
                 x = np.concatenate((x, [b]))
                 # Concatenate the new ordered labels
-                y = np.concatenate((y, np.array([z[int(filename[4:-4])]])))
+                y = np.append(y, np.array(z[int(filename[4:-4])]))
 
 # Save final arrays
-    np.save('data_def.npy', x) # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
-np.save('labels_def.npy', y) # final y.shape = 12630
+np.save('data_train.npy', x) # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
+np.save('labels_train.npy', y) # final y.shape = 12630
 
 # %%

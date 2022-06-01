@@ -82,7 +82,7 @@ if __name__ == '__main__':
         0.1699, 0.1693, 0.1254))
   ])
 
-  test_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('data_def.npy')), torch.LongTensor(np.load('labels_def.npy')))
+  test_set = torch.utils.data.TensorDataset(torch.load('data_test_def.pt'), torch.load('labels_test_def.pt'))
 
   print('Number of test images: {}'.format(len(test_set)))
 
@@ -107,15 +107,12 @@ if __name__ == '__main__':
   pred = np.empty((0,43), float)
 
   # Open a CSV file
-  output_file = open('pred_explain.csv', 'w') # open('explain.csv', 'w') (for second model)
+  output_file = open('pred_explain.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
   for idx, batch in enumerate(test_loader):
     x, y = batch
-
-    # Generate 129x32x32 maps from 3x32x32 (for second model)
-    x = x.repeat(1, 43, 1, 1)
 
     # Move the data to the right device
     x, y = x.to(device), y.to(device)

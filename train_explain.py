@@ -5,7 +5,6 @@ import torch
 import torchvision
 import torch.nn.functional as F
 from model_explain import Net
-import numpy as np
 import matplotlib.pyplot as plt
 
 # Hyper-parameters
@@ -77,7 +76,7 @@ if __name__ == '__main__':
         0.1699, 0.1693, 0.1254))
   ])
 
-  train_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('data_train.npy')), torch.LongTensor(np.load('labels_train.npy')))
+  train_set = torch.utils.data.TensorDataset(torch.load('data_train_def.pt'), torch.load('labels_train_def.pt'))
 
   # Classes (43) which images belong to
   classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 

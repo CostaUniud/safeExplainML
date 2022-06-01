@@ -16,3 +16,11 @@
 /pred.csv
 /explain.csv
 /explainability_train/*
+/data_train_def.pt
+/data_test_def.pt
+/prepare_data_train_pytorch.py
+/pred1.csv
+/pred.csv
+/wrong.csv
+/wrong1.csv
+/uncertainty.py

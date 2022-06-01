@@ -6,7 +6,6 @@ import torch
 import torchvision
 from model import Net
 import numpy as np
-import os
 from captum.attr import IntegratedGradients
 # from captum.attr import Saliency
 # from captum.attr import DeepLift
@@ -14,7 +13,7 @@ from captum.attr import IntegratedGradients
 # from captum.attr import visualization as viz
 
 # Model file to evaluate
-state_dict = 'model.pth'
+state_dict = 'model/model1.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -52,20 +51,20 @@ if __name__ == '__main__':
   ])
 
   # Load the GTSRB training set
-  train_set = torchvision.datasets.GTSRB(
-    root = './data',
-    split = 'train',
-    download = True,
-    transform = normalize
-  )
-
-  # Load the GTSRB test set
-  # test_set = torchvision.datasets.GTSRB(
+  # train_set = torchvision.datasets.GTSRB(
   #   root = './data',
-  #   split = 'test',
+  #   split = 'train',
   #   download = True,
   #   transform = normalize
   # )
+
+  # Load the GTSRB test set
+  test_set = torchvision.datasets.GTSRB(
+    root = './data',
+    split = 'test',
+    download = True,
+    transform = normalize
+  )
 
   # test_set2 = torchvision.datasets.GTSRB(
   #   root = './data',
@@ -74,12 +73,12 @@ if __name__ == '__main__':
   # )
 
   # Load data from disk and organize it in batches
-  train_loader = torch.utils.data.DataLoader(train_set, batch_size = 1, shuffle=True, num_workers=2)
-
-  print('Number of test images: {}'.format(len(train_loader)))
+  # train_loader = torch.utils.data.DataLoader(train_set, batch_size = 1, shuffle=True, num_workers=2)
 
   # Load data from disk and organize it in batches
-  # test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
+  test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
+
+  print('Number of test images: {}'.format(len(test_loader)))
 
   # Instantiate model structure
   model = Net(inplace_mode = False)
@@ -88,13 +87,13 @@ if __name__ == '__main__':
   model = model.to(device)
 
   # Load the model from file
-  model.load_state_dict(torch.load('./model/' + state_dict))
+  model.load_state_dict(torch.load(state_dict))
 
   # Create empty array to save labels
   a = []
 
   # Evaluate the model
-  for idx, batch in enumerate(train_loader):
+  for idx, batch in enumerate(test_loader):
     x, y = batch
 
     # Append label value to labels array
@@ -104,7 +103,7 @@ if __name__ == '__main__':
     x, y = x.to(device), y.to(device)
 
     # Perform the forward pass with Net
-    out = model(x)
+    # out = model(x)
 
     # Get predictions values
     #  probs = torch.softmax(out, dim=1)
@@ -120,7 +119,7 @@ if __name__ == '__main__':
 
     # Create folder to save captum results
     # directory = 'sample_' + str(idx)
-    parent_dir = 'explainability_train/'
+    parent_dir = 'explainability_test/'
     # path = os.path.join(parent_dir, directory)
     # os.mkdir(path)
 
@@ -179,6 +178,6 @@ if __name__ == '__main__':
         # _[0].savefig(sub_path + '/overlayed_deepLift')
 
   # Save labels array in a npy file
-  np.save('labels.npy', a)
+  np.save('labels_test.npy', a)
 
 # %%

@@ -19,7 +19,7 @@ def get_mean_and_std(dataloader):
 
   return mean, std
 
-train_set = torch.utils.data.TensorDataset(torch.FloatTensor(np.load('../data_def.npy')), torch.LongTensor(np.load('../labels_def.npy')))
+train_set = torch.utils.data.TensorDataset(torch.load('../data_train_def.pt'), torch.load('../labels_train_def.pt'))
 
 train_dataloader = DataLoader(dataset=train_set, batch_size=64)
 

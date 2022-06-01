@@ -14,12 +14,6 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
-# c = np.arange(132096) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
-# c = c.reshape((1, 32, 32, 129))
-# c = np.zeros_like(c)
-
-# l = np.array([0]) # DA ELIMINARE ALLA FINE PRIMA DEL TRAINING
-
 # A support np array x to start the concatenation
 x = np.empty((0, 32, 32, 129), float)
 
@@ -36,7 +30,7 @@ z = np.load('labels.npy', allow_pickle=True)
 #                       -> sample_12659 (directory) -> data12659.npy (file)
 
 # Concatenate np arrays of captum results and put labels in correct order
-for root, dirs, files in os.walk('.\explainability\\'):  
+for root, dirs, files in os.walk('.\explainability_test\\'):  
     for filename in files:
         if filename.endswith('.npy'):
             # Open npy file
@@ -52,11 +46,13 @@ for root, dirs, files in os.walk('.\explainability\\'):
                         b = np.concatenate((b, a), axis = 2) 
                 # Concatenate in a global array x with initial shape 1x32x32x129
                 x = np.concatenate((x, [b]))
+                print(x.shape)
                 # Concatenate the new ordered labels
-                y = np.concatenate((y, np.array([z[int(filename[4:-4])]])))
+                y = np.append(y, np.array(z[int(filename[4:-4])]))
+                print(y.shape)
 
 # Save final arrays
-    np.save('data_def.npy', x) # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
-np.save('labels_def.npy', y) # final y.shape = 12630
+np.save('data_test.npy', x) # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
+np.save('labels_test.npy', y) # final y.shape = 12630
 
 # %%

@@ -9,7 +9,7 @@ from sklearn.preprocessing import label_binarize
 import numpy as np
 
 # Model file path
-state_dict = './model/model.pth'
+state_dict = './model/model1.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
   pred = np.empty((0,43), float)
 
   # Open a CSV file
-  output_file = open('pred.csv', 'w')
+  output_file = open('wrong1.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
@@ -107,10 +107,9 @@ if __name__ == '__main__':
     pred = np.append(pred, probs.cpu().detach().numpy(), axis=0)
 
     # Check for incorrect predictions
-    # if (pred_idxs != y):
-    
-    # Write info about predction on CSV file
-    output_file.write("%d,%s,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf))
+    if (pred_idxs != y):
+      # Write info about predction on CSV file
+      output_file.write("%d,%s,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf))
 
     # Get the accuracy of one logit and sum with it to that of the others
     test_accuracy += accuracy(probs, y)

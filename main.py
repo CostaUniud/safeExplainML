@@ -7,7 +7,7 @@ from model import Net
 import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
-from utils.data_augmentation import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
+# from utils.data_augmentation import data_jitter_hue, data_jitter_brightness, data_jitter_saturation, data_jitter_contrast, data_rotate, data_hvflip, data_shear, data_translate, data_center, data_hflip, data_vflip
 
 # Hyper-parameters
 LEARNING_RATE = 0.0001
@@ -81,24 +81,25 @@ if __name__ == '__main__':
             'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
 
   # Load data from disk and organize it in batches
-  train_loader = torch.utils.data.DataLoader(
-    torch.utils.data.ConcatDataset([
-      train_set, 
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_hue),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_brightness),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_saturation),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_contrast),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_rotate),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hvflip),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_shear),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_translate),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_center),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hflip),
-      torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_vflip)
-      ]), 
-      batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+  train_loader = torch.utils.data.DataLoader(train_set, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+  # train_loader = torch.utils.data.DataLoader(
+  #   torch.utils.data.ConcatDataset([
+  #     train_set, 
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_hue),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_brightness),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_saturation),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_jitter_contrast),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_rotate),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hvflip),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_shear),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_translate),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_center),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_hflip),
+  #     torchvision.datasets.ImageFolder('./data/gtsrb/GTSRB/Training', transform=data_vflip)
+  #     ]), 
+  #     batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
-  print('Number of training images: {}'.format(len(train_set) * 11))
+  print('Number of training images: {}'.format(len(train_set)))
 
   # Get some random training images to show
   # dataiter = iter(train_loader)
@@ -163,7 +164,7 @@ if __name__ == '__main__':
     print('Epoch {} done!'.format(e))
   
   # Save the model
-  model_file = 'model.pth'
+  model_file = 'model1.pth'
   torch.save(model.state_dict(), './model/' + model_file)
 
   print('Training done!')

@@ -6,9 +6,9 @@ import torch.nn.functional as F
 
 nclasses = 43 # GTSRB has 43 classes
 
-class Net(nn.Module):
+class Net_explain(nn.Module):
     def __init__(self, inplace_mode = True):
-        super(Net, self).__init__()
+        super(Net_explain, self).__init__()
         
         self.inplace_mode = inplace_mode
         # CNN layers
