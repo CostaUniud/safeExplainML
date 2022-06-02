@@ -2,6 +2,7 @@
 
 # Prepare the data to train the second model
 import numpy as np
+import torch
 import os
 
 # Classes (43) which images belong to
@@ -13,46 +14,56 @@ classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km',
         'Pedestrian crossing', 'School', 'Cycle crossing', 'Snow', 'Wild animals', 'Go ahead', 'Right turn mandatory', 
         'Left turn mandatory', 'Mandatory direction straight', 'Directions right and straight', 'Directions left and straight', 
         'Mandatory step to the right', 'Mandatory step to the left', 'Roundabout', 'End of no overtaking', 'End of no overtaking of heavy vehicles')
+# Main
+if __name__ == '__main__':
+    # Define the device where we want run our model
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# A support np array x to start the concatenation
-x = np.empty((0, 32, 32, 129), float)
+    # A support np array x to start the concatenation
+    x = None
 
-# A support np array y to start the concatenation for labels
-y = []
+    # A support np array y to start the concatenation for labels
+    y = None
 
-# Load np array with labels that need to be re-ordered depending on the order in which we concatenate the samples 
-z = np.load('labels.npy', allow_pickle=True)
+    # Load np array with labels that need to be re-ordered depending on the order in which we concatenate the samples 
+    z = np.load('labels_test.npy', allow_pickle=True)
+    z = torch.from_numpy(z).long().to(device)
 
-# DIRECTORY STRUCTURE
-# explainability (root) -> sample_0 (directory) -> data0.npy (file with 43 np arrays)
-#                       -> sample_1 (directory) -> data1.npy (file)
-#                       -> sample_i (directory) -> datai.npy (file)
-#                       -> sample_12659 (directory) -> data12659.npy (file)
-
-# Concatenate np arrays of captum results and put labels in correct order
-for root, dirs, files in os.walk('.\explainability_test\\'):  
-    for filename in files:
+    # Concatenate np arrays of captum results and put labels in correct order
+    for id, filename in enumerate(os.listdir('explainability_test')):
+        print(filename)
+        if id != 0 and (id % 5000) == 0:
+            torch.save(x, 'data_test_def_' + str(id) + '.pt')
+            torch.save(y, 'labels_test_def_' + str(id) + '.pt')
         if filename.endswith('.npy'):
             # Open npy file
-            with open(root + '\\' + filename, 'rb') as g:
-                first_time = True
+            with open('explainability_test/' + filename, 'rb') as g:
+                b = None
                 # Concatenate the 43 arrays (32,32,3) on axis=2 --> (32,32,43x3)
                 for id, classe in enumerate(classes):
                     a = np.load(g, allow_pickle=True)
-                    if first_time:
-                        b = np.copy(a)
-                        first_time = False
+                    a = torch.from_numpy(a).float().to(device)
+                    if b is None:
+                        b = a.to(device)
                     else:
-                        b = np.concatenate((b, a), axis = 2) 
+                        b = torch.cat((b, a), axis=2)
+                        # print(b.shape)
                 # Concatenate in a global array x with initial shape 1x32x32x129
-                x = np.concatenate((x, [b]))
+                b = b.unsqueeze(0)
+                if x is None:
+                    x = b
+                else:
+                    x = torch.vstack((x, b))
                 print(x.shape)
                 # Concatenate the new ordered labels
-                y = np.append(y, np.array(z[int(filename[4:-4])]))
+                if y is None:
+                    y = torch.FloatTensor([z[int(filename[4:-4])]], device=device)
+                else:
+                    y = torch.cat((y, torch.FloatTensor([z[int(filename[4:-4])]], device=device)))
                 print(y.shape)
 
-# Save final arrays
-np.save('data_test.npy', x) # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
-np.save('labels_test.npy', y) # final y.shape = 12630
+    # Save final arrays
+    torch.save(x, 'data_test_def.pt') # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
+    torch.save(y, 'labels_test_def.pt') # final y.shape = 12630
 
 # %%
