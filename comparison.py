@@ -180,20 +180,20 @@ if __name__ == '__main__':
         # Write info about predction on CSV file
         output_file.write("%d,%s,%s,%f,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf, classes[pred_idxs2], conf2))
     
-    # Get the accuracy of one logit and sum with it to that of the others
-    test_accuracy += accuracy(probs, y)
-    # Get the accuracy of one logit and sum with it to that of the others
-    test_accuracy2 += accuracy(probs2, y)
+  # Get the accuracy of one logit and sum with it to that of the others
+  #   test_accuracy += accuracy(probs, y)
+  #   # Get the accuracy of one logit and sum with it to that of the others
+  #   test_accuracy2 += accuracy(probs2, y)
 
-  # Compute accuracy
-  test_accuracy /= len(test_set)
-  print('Test accuracy: {:.05f}'.format(test_accuracy))
-  output_file.write('Test accuracy: {:.05f}\n'.format(test_accuracy))
+  # # Compute accuracy
+  # test_accuracy /= len(test_set)
+  # print('Test accuracy: {:.05f}'.format(test_accuracy))
+  # output_file.write('Test accuracy: {:.05f}\n'.format(test_accuracy))
 
-  # Compute accuracy model 2
-  test_accuracy2 /= len(test_set)
-  print('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
-  output_file.write('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
+  # # Compute accuracy model 2
+  # test_accuracy2 /= len(test_set)
+  # print('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
+  # output_file.write('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
 
   # Close CSV
   output_file.close()
