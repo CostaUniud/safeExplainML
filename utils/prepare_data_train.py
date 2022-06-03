@@ -19,25 +19,23 @@ if __name__ == '__main__':
     # Define the device where we want run our model
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # A support np array x to start the concatenation
+    # A support variable x to start the concatenation for data
     x = None
 
-    # A support np array y to start the concatenation for labels
+    # A support variable y to start the concatenation for labels
     y = None
 
     # Load np array with labels that need to be re-ordered depending on the order in which we concatenate the samples 
-    z = np.load('labels_train.npy', allow_pickle=True)
+    z = np.load('../labels_train.npy', allow_pickle=True)
     z = torch.from_numpy(z).long().to(device)
 
     # Concatenate np arrays of captum results and put labels in correct order
-    for id, filename in enumerate(os.listdir('explainability_train')):
+    for id, filename in enumerate(os.listdir('../explainability_train')):
         print(filename)
-        if id != 0 and (id % 5000) == 0:
-            torch.save(x, 'data_train_def_' + str(id) + '.pt')
-            torch.save(y, 'labels_train_def_' + str(id) + '.pt')
         if filename.endswith('.npy'):
-            # Open npy file
-            with open('explainability_train/' + filename, 'rb') as g:
+            # Open npy file with data to concatenate
+            with open('../explainability_train/' + filename, 'rb') as g:
+                # A support variable b to start the concatenation
                 b = None
                 # Concatenate the 43 arrays (32,32,3) on axis=2 --> (32,32,43x3)
                 for id, classe in enumerate(classes):
@@ -61,9 +59,13 @@ if __name__ == '__main__':
                 else:
                     y = torch.cat((y, torch.FloatTensor([z[int(filename[4:-4])]], device=device)))
                 print(y.shape)
+                # Save intermediate tensors
+                if id != 0 and (id % 5000) == 0:
+                    torch.save(x, '../data_train_def_' + str(id) + '.pt')
+                    torch.save(y, '../labels_train_def_' + str(id) + '.pt')
 
-    # Save final arrays
-    torch.save(x, 'data_train_def.pt') # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
-    torch.save(y, 'labels_train_def.pt') # final y.shape = 12630
+    # Save final tensors
+    torch.save(x, '../data_train_def.pt') # final x.shape = 12630x32x32x129 (num_samples, height, width, channels)
+    torch.save(y, '../labels_train_def.pt') # final y.shape = 12630
 
 # %%

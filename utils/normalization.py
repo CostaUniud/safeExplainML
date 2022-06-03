@@ -1,3 +1,4 @@
+# %%
 # Calculate mean and standard devation on a dataset
 import torch
 from torch.utils.data import DataLoader
@@ -19,8 +20,9 @@ def get_mean_and_std(dataloader):
 
   return mean, std
 
-train_set = torch.utils.data.TensorDataset(torch.load('../data_train_def.pt'), torch.load('../labels_train_def.pt'))
+train_set = torch.utils.data.TensorDataset(torch.load('../data_test_def.pt'), torch.load('../labels_test_def.pt'))
 
 train_dataloader = DataLoader(dataset=train_set, batch_size=64)
 
 print(get_mean_and_std(train_dataloader))
+# %%

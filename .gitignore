@@ -24,3 +24,7 @@
 /wrong.csv
 /wrong1.csv
 /uncertainty.py
+/data_train_def_15000.pt
+/labels_train_def_15000.pt
+/data_test_def.pt
+/labels_test_def.pt

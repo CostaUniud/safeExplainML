@@ -1,0 +1,22 @@
+Filename,ClassId,Pred_1,Conf_1,Pred_2,Conf_2
+33,Danger of slipping,Snow,0.709507,Danger of slipping,0.976810
+114,Snow,Danger of slipping,0.494367,Snow,0.991634
+1079,Double curve,Limit 30km,0.692567,Double curve,0.996090
+1402,Snow,Traffic light,0.563556,Snow,0.838836
+1759,Double curve,Limit 30km,0.472564,Double curve,0.991590
+1969,Roundabout,Generic danger,0.496414,Roundabout,0.955600
+2054,Generic danger,Traffic light,0.789141,Generic danger,1.000000
+2535,Roundabout,Mandatory step to the left,0.392741,Roundabout,0.999765
+3103,Roundabout,Mandatory step to the left,0.788048,Roundabout,0.999973
+4709,Roundabout,Mandatory step to the left,0.780018,Roundabout,0.985261
+4783,Men at work,Intersection with right of way,0.693127,Men at work,0.954266
+4893,Asymmetrical bottleneck,Traffic light,0.517181,Asymmetrical bottleneck,0.954752
+5992,Roundabout,Directions left and straight,0.689958,Roundabout,0.999323
+6894,Roundabout,Mandatory step to the left,0.713073,Roundabout,0.790999
+8808,Roundabout,Mandatory step to the left,0.595979,Roundabout,0.999832
+10840,Intersection with right of way,Dangerous right curve,0.814732,Intersection with right of way,0.983567
+11833,Roundabout,Directions left and straight,0.474390,Roundabout,0.994300
+12016,Asymmetrical bottleneck,Traffic light,0.394920,Asymmetrical bottleneck,0.997925
+12135,Roundabout,Directions left and straight,0.590259,Roundabout,0.999073
+12253,Asymmetrical bottleneck,Traffic light,0.552845,Asymmetrical bottleneck,0.963007
+Test accuracy: 0.98226Test accuracy model 2: 0.00158
