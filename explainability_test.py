@@ -50,14 +50,6 @@ if __name__ == '__main__':
     torchvision.transforms.Normalize((-0.3337, -0.3064, -0.3171), (1., 1., 1.)),
   ])
 
-  # Load the GTSRB training set
-  # train_set = torchvision.datasets.GTSRB(
-  #   root = './data',
-  #   split = 'train',
-  #   download = True,
-  #   transform = normalize
-  # )
-
   # Load the GTSRB test set
   test_set = torchvision.datasets.GTSRB(
     root = './data',
@@ -71,9 +63,6 @@ if __name__ == '__main__':
   #   split = 'test',
   #   download = False
   # )
-
-  # Load data from disk and organize it in batches
-  # train_loader = torch.utils.data.DataLoader(train_set, batch_size = 1, shuffle=True, num_workers=2)
 
   # Load data from disk and organize it in batches
   test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)

@@ -38,7 +38,7 @@ if __name__ == '__main__':
                 # A support variable b to start the concatenation
                 b = None
                 # Concatenate the 43 arrays (32,32,3) on axis=2 --> (32,32,43x3)
-                for id, classe in enumerate(classes):
+                for classe in classes:
                     a = np.load(g, allow_pickle=True)
                     a = torch.from_numpy(a).float().to(device)
                     if b is None:

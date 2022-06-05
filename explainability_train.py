@@ -58,27 +58,18 @@ if __name__ == '__main__':
     transform = normalize
   )
 
-  # Load the GTSRB test set
-  # test_set = torchvision.datasets.GTSRB(
+  # Load the GTSRB training set
+  # train_set2 = torchvision.datasets.GTSRB(
   #   root = './data',
-  #   split = 'test',
-  #   download = True,
+  #   split = 'train',
+  #   download = False,
   #   transform = normalize
   # )
 
-  # test_set2 = torchvision.datasets.GTSRB(
-  #   root = './data',
-  #   split = 'test',
-  #   download = False
-  # )
-
   # Load data from disk and organize it in batches
-  train_loader = torch.utils.data.DataLoader(train_set, batch_size = 1, shuffle=True, num_workers=2)
+  train_loader = torch.utils.data.DataLoader(train_set, batch_size = 1, shuffle=False, num_workers=2)
 
   print('Number of test images: {}'.format(len(train_loader)))
-
-  # Load data from disk and organize it in batches
-  # test_loader = torch.utils.data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=2)
 
   # Instantiate model structure
   model = Net(inplace_mode = False)
