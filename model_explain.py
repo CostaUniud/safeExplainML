@@ -46,9 +46,9 @@ class Net_explain(nn.Module):
     # Spatial transformer network forward function
     def stn(self, x):
         xs = self.localization(x)
-        xs = xs.view(-1, 10 * 4 * 4)
+        xs = xs.reshape(-1, 10 * 4 * 4)
         theta = self.fc_loc(xs)
-        theta = theta.view(-1, 2, 3)
+        theta = theta.reshape(-1, 2, 3)
         grid = F.affine_grid(theta, x.size(), align_corners = True)
         x = F.grid_sample(x, grid, align_corners = True)
         return x
@@ -64,7 +64,7 @@ class Net_explain(nn.Module):
         x = self.conv_drop(x)
         x = self.bn3(F.max_pool2d(F.leaky_relu(self.conv3(x), inplace=self.inplace_mode), 2))
         x = self.conv_drop(x)
-        x = x.view(-1, 250*2*2) # Tensor linearization
+        x = x.reshape(-1, 250*2*2) # Tensor linearization
         x = F.relu(self.fc1(x), inplace=self.inplace_mode)
         x = F.dropout(x, training=self.training)
         x = self.fc2(x)

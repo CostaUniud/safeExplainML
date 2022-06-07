@@ -9,7 +9,7 @@ from sklearn.preprocessing import label_binarize
 import numpy as np
 
 # Model file path
-state_dict = './model2/model.pth'
+state_dict = './model2/model2.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 

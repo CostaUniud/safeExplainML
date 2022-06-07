@@ -8,8 +8,8 @@ from model_explain import Net_explain
 from captum.attr import IntegratedGradients
 
 # Model file to evaluate
-state_dict = 'model/model1.pth'
-state_dict2 = 'model2/model.pth'
+state_dict = 'model/model.pth'
+state_dict2 = 'model2/model2.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -127,7 +127,7 @@ if __name__ == '__main__':
   test_accuracy2 = 0.0
 
   # Open a CSV file
-  output_file = open('comparison2.csv', 'w')
+  output_file = open('comparison_difference.csv', 'w')
   output_file.write('Filename,ClassId,Pred_1,Conf_1,Pred_2,Conf_2\n')
 
   # Evaluate the model
@@ -146,54 +146,54 @@ if __name__ == '__main__':
     conf, pred_idxs = torch.max(probs.data, 1)
 
     # Check for incorrect predictions
-    if (pred_idxs != y):
-      x.requires_grad = True
+    # if (pred_idxs != y):
 
-      # Set the model in evaluation mode
-      model.eval()
+    x.requires_grad = True
 
-      b = None
+    # Set the model in evaluation mode
+    model.eval()
 
-      # For each class
-      for id, c in enumerate(classes):
+    b = None
 
-        # Applies integrated gradients attribution algorithm on test image
-        ig = IntegratedGradients(model)
-        attr_ig, delta = attribute_image_features(ig, x, id, baselines=x * 0, return_convergence_delta=True)
-        attr_ig = attr_ig.squeeze().float().to(device)
-        # print(attr_ig.size())
-        if b is None:
-          b = attr_ig
-        else:
-          b = torch.cat((b, attr_ig))
-      
-      # print(b.size())
-      b = normalize2(b).unsqueeze(0)
-      out2 = model2(b)
-
-      # Get predictions values model 2
-      probs2 = torch.softmax(out2, dim=1)
-      conf2, pred_idxs2 = torch.max(probs2.data, 1)
-
-      # Check for correct predictions
-      if (pred_idxs2 == y):
-        # Write info about predction on CSV file
-        output_file.write("%d,%s,%s,%f,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf, classes[pred_idxs2], conf2))
+    # For each class
+    for id, c in enumerate(classes):
+      # Applies integrated gradients attribution algorithm on test image
+      ig = IntegratedGradients(model)
+      attr_ig, delta = attribute_image_features(ig, x, id, baselines=x * 0, return_convergence_delta=True)
+      attr_ig = attr_ig.squeeze().float().to(device)
+      # print(attr_ig.size())
+      if b is None:
+        b = attr_ig
+      else:
+        b = torch.cat((b, attr_ig))
     
-  # Get the accuracy of one logit and sum with it to that of the others
-  #   test_accuracy += accuracy(probs, y)
-  #   # Get the accuracy of one logit and sum with it to that of the others
-  #   test_accuracy2 += accuracy(probs2, y)
+    # print(b.size())
+    b = normalize2(b).unsqueeze(0)
+    out2 = model2(b)
 
-  # # Compute accuracy
-  # test_accuracy /= len(test_set)
-  # print('Test accuracy: {:.05f}'.format(test_accuracy))
-  # output_file.write('Test accuracy: {:.05f}\n'.format(test_accuracy))
+    # Get predictions values model 2
+    probs2 = torch.softmax(out2, dim=1)
+    conf2, pred_idxs2 = torch.max(probs2.data, 1)
 
-  # # Compute accuracy model 2
-  # test_accuracy2 /= len(test_set)
-  # print('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
-  # output_file.write('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
+    # Check for different predictions on the same input
+    if (pred_idxs != pred_idxs2):
+      # Write info about predction on CSV file
+      output_file.write("%d,%s,%s,%f,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf, classes[pred_idxs2], conf2))
+    
+    # Get the accuracy of one logit and sum with it to that of the others
+    test_accuracy += accuracy(probs, y)
+    # Get the accuracy of one logit and sum with it to that of the others
+    test_accuracy2 += accuracy(probs2, y)
+
+  # Compute accuracy
+  test_accuracy /= len(test_set)
+  print('Test accuracy: {:.05f}'.format(test_accuracy))
+  output_file.write('Test accuracy: {:.05f}\n'.format(test_accuracy))
+
+  # Compute accuracy model 2
+  test_accuracy2 /= len(test_set)
+  print('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
+  output_file.write('Test accuracy model 2: {:.05f}'.format(test_accuracy2))
 
   # Close CSV
   output_file.close()

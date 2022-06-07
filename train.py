@@ -164,7 +164,7 @@ if __name__ == '__main__':
     print('Epoch {} done!'.format(e))
   
   # Save the model
-  model_file = 'model1.pth'
+  model_file = 'model.pth'
   torch.save(model.state_dict(), './model/' + model_file)
 
   print('Training done!')

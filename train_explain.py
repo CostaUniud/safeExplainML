@@ -5,7 +5,7 @@ import torch
 import torchvision
 import torch.nn.functional as F
 from model_explain import Net_explain
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # Hyper-parameters
 LEARNING_RATE = 0.0001
@@ -156,20 +156,20 @@ if __name__ == '__main__':
     print('Epoch {} done!'.format(e))
 
   # Save the model
-  model_file = 'modelDef.pth'
+  model_file = 'model2/model2.pth'
   torch.save(model.state_dict(), model_file)
 
   print('Training done!')
 
   # Plot accuracy and loss values for each epoch
-  # plt.figure(figsize=(10,5))
-  # plt.title("Training loss and accuracy")
-  # plt.plot(loss_vals, label="loss")
-  # plt.plot(acc_vals, label="accuray")
-  # plt.xlabel("Epochs")
-  # plt.ylabel("Loss / Accuracy")
-  # plt.legend()
-  # plt.show()
+  plt.figure(figsize=(10,5))
+  plt.title("Training loss and accuracy")
+  plt.plot(loss_vals, label="loss")
+  plt.plot(acc_vals, label="accuray")
+  plt.xlabel("Epochs")
+  plt.ylabel("Loss / Accuracy")
+  plt.legend()
+  plt.show()
 
 
 

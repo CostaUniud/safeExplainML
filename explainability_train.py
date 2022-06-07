@@ -13,7 +13,7 @@ from captum.attr import IntegratedGradients
 # from captum.attr import visualization as viz
 
 # Model file to evaluate
-state_dict = 'model1.pth'
+state_dict = 'model/model.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 

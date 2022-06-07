@@ -9,7 +9,7 @@ from sklearn.preprocessing import label_binarize
 import numpy as np
 
 # Model file path
-state_dict = './model/model1.pth'
+state_dict = './model/model.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
   pred = np.empty((0,43), float)
 
   # Open a CSV file
-  output_file = open('wrong1.csv', 'w')
+  output_file = open('wrong.csv', 'w')
   output_file.write('Filename,ClassId,Pred,Conf\n')
 
   # Evaluate the model
