@@ -31,6 +31,8 @@ if __name__ == '__main__':
 
     # Concatenate np arrays of captum results and put labels in correct order
     for id, filename in enumerate(os.listdir('../explainability_train')):
+        if id <= 20000:
+            continue
         print(filename)
         if filename.endswith('.npy'):
             # Open npy file with data to concatenate

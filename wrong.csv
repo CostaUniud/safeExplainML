@@ -1,188 +1,206 @@
 Filename,ClassId,Pred,Conf
-3,Right turn mandatory,Left turn mandatory,0.729717
-50,Men at work,Limit 30km,0.450522
-114,Snow,Danger of slipping,0.656132
-127,Snow,Dangerous right curve,0.725852
-237,Snow,Dangerous right curve,0.837539
-309,Mandatory step to the right,Mandatory step to the left,0.554339
-339,Danger of bumps,Men at work,0.431360
-363,Mandatory step to the left,Mandatory step to the right,0.713500
-368,Dangerous left curve,Danger of slipping,0.311059
-455,Mandatory step to the right,Roundabout,0.239241
-477,Directions right and straight,Directions left and straight,0.776502
-492,Limit 70km,Limit 80km,0.542909
-496,Snow,Intersection with right of way,0.483723
-781,Mandatory step to the left,Mandatory step to the right,0.720036
-829,Pedestrian crossing,Intersection with right of way,0.812041
-904,Pedestrian crossing,Intersection with right of way,0.783653
-1073,Mandatory step to the left,Mandatory step to the right,0.783242
-1155,Right turn mandatory,Left turn mandatory,0.716314
-1212,Mandatory step to the left,Mandatory step to the right,0.808627
-1317,Men at work,Intersection with right of way,0.993668
-1402,Snow,Dangerous right curve,0.497856
-1431,Pedestrian crossing,Intersection with right of way,0.802268
-1489,Right of way,Transit prohibition,0.640136
-1726,No overtaking of heavy vehicles,No overtaking,0.534644
-1746,Mandatory step to the left,Mandatory step to the right,0.664607
-1889,Mandatory step to the left,Mandatory step to the right,0.767475
-1910,Danger of bumps,Give right to pass,0.409947
-1969,Roundabout,Directions left and straight,0.571896
-2109,Snow,Go ahead,0.203068
-2157,Pedestrian crossing,Intersection with right of way,0.789595
-2191,Limit 80km,Limit 50km,0.801976
-2202,Right turn mandatory,Left turn mandatory,0.721403
-2378,Men at work,Pedestrian crossing,0.383651
-2457,Limit 50km,Limit 60km,0.941077
-2494,Limit 50km,Limit 30km,0.928051
-2503,Mandatory step to the left,Mandatory step to the right,0.622157
-2635,Limit 80km,Limit 60km,0.937626
-2748,Pedestrian crossing,Intersection with right of way,0.815658
-2758,Limit 80km,Limit 60km,0.763509
-2814,Mandatory step to the left,Mandatory step to the right,0.721592
-2836,Limit 80km,Limit 30km,0.536277
-2847,Pedestrian crossing,Intersection with right of way,0.673715
-2880,Mandatory step to the left,Mandatory step to the right,0.753578
-2891,Mandatory step to the left,Mandatory step to the right,0.819218
-3025,Snow,Danger of slipping,0.467380
-3109,Mandatory step to the left,Mandatory step to the right,0.829129
-3173,Mandatory step to the right,Men at work,0.458948
-3250,Pedestrian crossing,Intersection with right of way,0.782854
-3341,Mandatory step to the left,Mandatory step to the right,0.614175
-3373,Danger of slipping,Dangerous right curve,0.381079
-3564,Pedestrian crossing,Intersection with right of way,0.740223
-3567,Snow,Dangerous right curve,0.351314
-3704,Roundabout,Limit 30km,0.297643
-3748,Right of way,Intersection with right of way,0.229292
-3778,Snow,Dangerous right curve,0.578005
-4011,Snow,Dangerous right curve,0.639409
-4079,Generic danger,Pedestrian crossing,0.593252
-4130,Mandatory step to the left,Mandatory step to the right,0.604506
-4306,Transit prohibition,Give right to pass,0.533307
-4342,Right turn mandatory,Left turn mandatory,0.907131
-4383,Snow,Dangerous right curve,0.580410
-4456,Pedestrian crossing,Intersection with right of way,0.789380
-4471,Right turn mandatory,Left turn mandatory,0.670670
-4562,Pedestrian crossing,Intersection with right of way,0.776926
-4585,Pedestrian crossing,Intersection with right of way,0.756042
-4601,Limit 70km,Directions right and straight,0.461393
-4613,Directions left and straight,Directions right and straight,0.709569
-4780,Generic danger,Traffic light,0.560622
-4803,Limit 70km,Limit 50km,0.657203
-4833,Snow,Danger of slipping,0.727487
-4897,Limit 70km,Right turn mandatory,0.323276
-4985,Snow,Danger of slipping,0.462065
-5057,Pedestrian crossing,Intersection with right of way,0.796722
-5101,Generic danger,Pedestrian crossing,0.533504
-5233,Pedestrian crossing,Intersection with right of way,0.730373
-5476,Intersection with right of way,Generic danger,0.720396
-5507,Men at work,Limit 70km,0.255657
-5518,Pedestrian crossing,Intersection with right of way,0.814384
-5521,End limit 80km,Limit 50km,0.255595
-5555,Mandatory step to the left,Mandatory step to the right,0.798334
-5558,Right turn mandatory,Left turn mandatory,0.657414
-5593,Directions right and straight,Directions left and straight,0.569374
-5629,Danger of slipping,Wild animals,0.227706
-5658,Directions left and straight,Directions right and straight,0.830066
-5667,Pedestrian crossing,Intersection with right of way,0.771122
-5693,Pedestrian crossing,Intersection with right of way,0.777171
-5878,Generic danger,Traffic light,0.863581
-5892,Give right to pass,Roundabout,0.473619
-5895,Pedestrian crossing,Intersection with right of way,0.767551
-6090,Snow,Dangerous right curve,0.595982
-6129,Mandatory step to the right,Men at work,0.462187
-6391,Men at work,Pedestrian crossing,0.647294
-6509,Pedestrian crossing,Intersection with right of way,0.822763
-6612,Pedestrian crossing,Intersection with right of way,0.768232
-6739,Men at work,Pedestrian crossing,0.673670
-6778,Mandatory step to the left,Mandatory step to the right,0.799897
-6862,Mandatory step to the left,Roundabout,0.800378
-6910,Limit 100km,Limit 120km,0.597270
-6920,Asymmetrical bottleneck,Generic danger,0.694604
-6980,Danger of bumps,Snow,0.265822
-7035,Generic danger,Traffic light,0.693676
-7073,Pedestrian crossing,Intersection with right of way,0.791791
-7225,Pedestrian crossing,Intersection with right of way,0.742708
-7276,No overtaking of heavy vehicles,Dangerous right curve,0.270436
-7330,Limit 100km,Limit 120km,0.985499
-7461,Snow,Danger of slipping,0.468581
-7467,Dangerous right curve,Wild animals,0.453160
-7525,Snow,Dangerous right curve,0.720614
-7553,Pedestrian crossing,Intersection with right of way,0.835460
-7597,Wild animals,No overtaking of heavy vehicles,0.292892
-7671,Limit 80km,Limit 30km,0.506356
-7695,Roundabout,Directions right and straight,0.307468
-7790,Mandatory step to the right,Men at work,0.370946
-7833,Mandatory step to the left,Mandatory step to the right,0.771860
-7861,Limit 80km,Limit 60km,0.928521
-7995,Danger of slipping,Wild animals,0.312189
-8027,Mandatory step to the right,Directions right and straight,0.310895
-8058,Generic danger,End limit 80km,0.503783
-8337,Mandatory step to the left,Mandatory step to the right,0.898241
-8372,Right turn mandatory,Left turn mandatory,0.865885
-8382,Mandatory step to the left,Mandatory step to the right,0.744297
-8422,Pedestrian crossing,Intersection with right of way,0.761785
-8424,Directions left and straight,Directions right and straight,0.682573
-8499,End limit 80km,Go ahead,0.392195
-8544,Mandatory step to the left,Mandatory step to the right,0.744175
-8585,Pedestrian crossing,Intersection with right of way,0.761019
-8624,Snow,Intersection with right of way,0.561527
-8706,Limit 80km,Limit 60km,0.558100
-8750,Men at work,Intersection with right of way,0.618772
-8861,Mandatory step to the left,Mandatory step to the right,0.515707
-8869,Mandatory step to the left,Mandatory step to the right,0.798906
-8974,Snow,Danger of slipping,0.464043
-9087,Generic danger,Give right to pass,0.575458
-9095,Asymmetrical bottleneck,School,0.267252
-9158,Pedestrian crossing,Intersection with right of way,0.803900
-9164,Directions left and straight,Directions right and straight,0.864996
-9173,Mandatory step to the right,Directions left and straight,0.284520
-9183,Mandatory step to the left,Mandatory step to the right,0.665893
-9242,Generic danger,Intersection with right of way,0.371266
-9330,Men at work,Pedestrian crossing,0.765127
-9413,Generic danger,Pedestrian crossing,0.731244
-9434,Danger of slipping,Dangerous right curve,0.555355
-9509,Pedestrian crossing,Intersection with right of way,0.641818
-9555,Limit 80km,Limit 50km,0.375802
-9880,Mandatory step to the left,Directions right and straight,0.525143
-10056,Mandatory step to the left,Mandatory step to the right,0.767379
-10067,Men at work,Pedestrian crossing,0.519956
-10300,Limit 100km,Limit 80km,0.422391
-10330,Generic danger,Traffic light,0.668027
-10367,Pedestrian crossing,Intersection with right of way,0.820338
-10502,Traffic light,Generic danger,0.650516
-10546,Limit 30km,Limit 120km,0.241729
-10562,Directions right and straight,Directions left and straight,0.631160
-10564,Mandatory step to the left,Mandatory step to the right,0.321733
-10584,Snow,Dangerous right curve,0.553911
-10731,Right turn mandatory,Left turn mandatory,0.625487
-10837,Mandatory step to the left,Mandatory step to the right,0.643100
-10845,Mandatory step to the left,Roundabout,0.370146
-10866,Men at work,Pedestrian crossing,0.440666
-10878,Pedestrian crossing,Intersection with right of way,0.725700
-11016,Limit 60km,Generic danger,0.566117
-11132,Men at work,Generic danger,0.433796
-11142,Limit 80km,Limit 60km,0.698098
-11168,Right turn mandatory,Left turn mandatory,0.522560
-11173,Snow,Dangerous right curve,0.810471
-11239,Danger of slipping,Dangerous right curve,0.653373
-11366,Pedestrian crossing,Intersection with right of way,0.772947
-11377,Directions right and straight,Directions left and straight,0.550096
-11415,Pedestrian crossing,Intersection with right of way,0.792043
-11435,Snow,Men at work,0.685374
-11507,Limit 80km,Limit 60km,0.601549
-11518,Directions left and straight,Directions right and straight,0.845439
-11547,Directions left and straight,Directions right and straight,0.566776
-11569,Limit 80km,Limit 30km,0.357536
-11650,Limit 60km,End of no overtaking of heavy vehicles,0.896192
-11741,Left turn mandatory,Directions right and straight,0.472936
-11751,Left turn mandatory,Right turn mandatory,0.609399
-11825,Traffic light,Give right to pass,0.574042
-11976,Danger of bumps,Wild animals,0.346274
-12039,Mandatory step to the left,Mandatory step to the right,0.736346
-12054,Right of way,Intersection with right of way,0.247892
-12120,Men at work,Intersection with right of way,0.806821
-12155,Men at work,Intersection with right of way,0.589693
-12262,Mandatory step to the left,Mandatory step to the right,0.694578
-12396,Limit 60km,Prohibition of heavy vehicles transit,0.596032
-Model accuracy
-0.985352
+50,Men at work,Generic danger,0.650855
+66,Traffic light,Generic danger,0.631458
+114,Snow,Danger of slipping,0.849230
+127,Snow,Traffic light,0.704838
+198,Generic danger,Wild animals,0.584213
+265,Right of way,Directions right and straight,0.501928
+309,Mandatory step to the right,Limit 50km,0.842412
+374,Traffic light,Danger of bumps,0.886307
+453,Roundabout,Directions left and straight,0.545452
+455,Mandatory step to the right,Left turn mandatory,0.613998
+475,Right of way,Roundabout,0.718394
+492,Limit 70km,Limit 50km,0.733272
+496,Snow,Danger of slipping,0.438920
+764,Right of way,Roundabout,0.648406
+804,Right of way,Transit prohibition,0.261222
+829,Pedestrian crossing,Generic danger,0.358726
+904,Pedestrian crossing,Generic danger,0.476881
+1008,Right of way,Roundabout,0.885208
+1022,Intersection with right of way,Snow,0.615470
+1189,Right of way,Transit prohibition,0.971422
+1210,Generic danger,Wild animals,0.774674
+1317,Men at work,Intersection with right of way,0.999309
+1431,Pedestrian crossing,Generic danger,0.597786
+1489,Right of way,Transit prohibition,0.728849
+1524,Snow,Danger of slipping,0.423141
+1747,Right of way,Transit prohibition,0.862989
+1753,Generic danger,Pedestrian crossing,0.592579
+1910,Danger of bumps,Generic danger,0.952584
+1958,Roundabout,Mandatory step to the left,0.614494
+2054,Generic danger,Traffic light,0.832502
+2057,Directions right and straight,Mandatory step to the right,0.556935
+2109,Snow,Limit 30km,0.910795
+2154,Limit 30km,Mandatory step to the right,0.985606
+2157,Pedestrian crossing,Generic danger,0.667873
+2191,Limit 80km,Limit 50km,0.983337
+2258,Right of way,Transit prohibition,0.999677
+2379,Right of way,Transit prohibition,0.638731
+2494,Limit 50km,Limit 30km,0.999977
+2506,Roundabout,Directions left and straight,0.447401
+2577,Limit 70km,Limit 80km,0.818628
+2615,Right of way,Roundabout,0.466408
+2635,Limit 80km,Limit 60km,0.729320
+2748,Pedestrian crossing,Limit 30km,0.527827
+2751,Asymmetrical bottleneck,Pedestrian crossing,0.705347
+2836,Limit 80km,Limit 30km,0.653559
+2847,Pedestrian crossing,Generic danger,0.626754
+2886,No overtaking of heavy vehicles,Dangerous left curve,0.550710
+2896,Right of way,Give right to pass,0.301475
+3103,Roundabout,Mandatory step to the left,0.694003
+3220,Asymmetrical bottleneck,Traffic light,0.822279
+3250,Pedestrian crossing,Generic danger,0.508449
+3370,Right of way,Limit 50km,0.246263
+3564,Pedestrian crossing,Generic danger,0.766150
+3567,Snow,Pedestrian crossing,0.444273
+3574,Right of way,Transit prohibition,0.358934
+3704,Roundabout,Dangerous right curve,0.296338
+3727,Traffic light,Danger of bumps,0.569865
+3744,Right of way,Transit prohibition,0.996924
+3748,Right of way,Men at work,0.649296
+3778,Snow,Dangerous right curve,0.896587
+3793,Right of way,Transit prohibition,0.999280
+4219,Give right to pass,Go ahead,0.455890
+4271,End limit 80km,Go ahead,0.662093
+4314,Traffic light,Danger of bumps,0.597146
+4341,Right of way,Transit prohibition,0.860753
+4456,Pedestrian crossing,Generic danger,0.782049
+4562,Pedestrian crossing,Limit 30km,0.536277
+4585,Pedestrian crossing,Generic danger,0.593856
+4709,Roundabout,Mandatory step to the left,0.721572
+4756,Generic danger,Wild animals,0.887645
+4783,Men at work,Intersection with right of way,0.780997
+4795,Limit 20km,Limit 120km,0.684907
+4893,Asymmetrical bottleneck,Traffic light,0.529260
+4897,Limit 70km,Right turn mandatory,0.937841
+4983,Right of way,Transit prohibition,0.989341
+5057,Pedestrian crossing,Limit 30km,0.516771
+5180,Generic danger,Wild animals,0.951069
+5182,Right of way,Transit prohibition,0.998924
+5233,Pedestrian crossing,Generic danger,0.502890
+5352,Intersection with right of way,Snow,0.566851
+5476,Intersection with right of way,End of no overtaking,0.908892
+5507,Men at work,Generic danger,0.866637
+5518,Pedestrian crossing,Limit 30km,0.540446
+5521,End limit 80km,Go ahead,0.893191
+5529,Right of way,Give right to pass,0.868087
+5574,Generic danger,Wild animals,0.810123
+5625,No overtaking of heavy vehicles,Limit 60km,0.530065
+5659,Roundabout,Mandatory step to the left,0.567958
+5667,Pedestrian crossing,Generic danger,0.534378
+5693,Pedestrian crossing,Generic danger,0.620257
+5892,Give right to pass,Limit 100km,0.485686
+5895,Pedestrian crossing,Generic danger,0.571661
+5915,Generic danger,Wild animals,0.677212
+5934,Right of way,Roundabout,0.539911
+5992,Roundabout,Directions left and straight,0.810208
+6006,Limit 50km,Limit 60km,0.518566
+6090,Snow,Dangerous right curve,0.709814
+6129,Mandatory step to the right,No overtaking of heavy vehicles,0.863480
+6177,Limit 60km,Limit 80km,0.732258
+6310,Snow,Traffic light,0.880015
+6334,Traffic light,Danger of bumps,0.915123
+6341,Men at work,Generic danger,0.371233
+6356,Traffic light,Danger of bumps,0.936405
+6418,Directions right and straight,Mandatory step to the right,0.923475
+6509,Pedestrian crossing,Generic danger,0.388698
+6612,Pedestrian crossing,Generic danger,0.660477
+6613,Limit 60km,Limit 80km,0.928356
+6710,Right of way,Directions right and straight,0.430157
+6731,Traffic light,Men at work,0.450156
+6739,Men at work,Intersection with right of way,0.352948
+6862,Mandatory step to the left,Right turn mandatory,0.502498
+6874,Limit 60km,Limit 80km,0.955923
+6878,Generic danger,Men at work,0.518014
+6894,Roundabout,Mandatory step to the left,0.557700
+6920,Asymmetrical bottleneck,Double curve,0.955490
+7073,Pedestrian crossing,Generic danger,0.602784
+7081,Snow,Dangerous right curve,0.982998
+7225,Pedestrian crossing,Generic danger,0.735177
+7273,Right of way,Transit prohibition,0.330816
+7276,No overtaking of heavy vehicles,Wrong way,0.401065
+7279,Right of way,Transit prohibition,0.948940
+7330,Limit 100km,Limit 120km,0.998936
+7553,Pedestrian crossing,Generic danger,0.320963
+7597,Wild animals,Dangerous right curve,0.604099
+7633,Intersection with right of way,Snow,0.957316
+7695,Roundabout,Generic danger,0.905479
+8058,Generic danger,Men at work,0.624963
+8187,Traffic light,Danger of bumps,0.784655
+8292,Generic danger,Wild animals,0.662232
+8308,Right of way,Transit prohibition,0.997450
+8422,Pedestrian crossing,Generic danger,0.527242
+8499,End limit 80km,Go ahead,0.775157
+8549,Snow,Dangerous right curve,0.914352
+8585,Pedestrian crossing,Intersection with right of way,0.403744
+8587,Traffic light,Danger of bumps,0.778963
+8624,Snow,End limit 80km,0.975510
+8702,Traffic light,Danger of bumps,0.805894
+8750,Men at work,Intersection with right of way,0.729155
+8808,Roundabout,Mandatory step to the left,0.541807
+9087,Generic danger,Dangerous right curve,0.398888
+9111,Intersection with right of way,Snow,0.808270
+9158,Pedestrian crossing,Intersection with right of way,0.410825
+9411,Snow,Traffic light,0.646619
+9413,Generic danger,Pedestrian crossing,0.553701
+9509,Pedestrian crossing,Limit 30km,0.577267
+9769,Snow,Dangerous right curve,0.369839
+9880,Mandatory step to the left,Directions right and straight,0.364280
+9952,Right of way,Transit prohibition,0.555617
+9961,Wild animals,Generic danger,0.454683
+9974,Intersection with right of way,Snow,0.866311
+10015,End limit 80km,End of no overtaking of heavy vehicles,0.744262
+10024,Generic danger,Pedestrian crossing,0.531991
+10067,Men at work,Generic danger,0.449351
+10124,Intersection with right of way,Snow,0.747771
+10324,Right of way,Limit 50km,0.434922
+10328,Generic danger,Wild animals,0.818327
+10359,Right of way,Give right to pass,0.411653
+10367,Pedestrian crossing,Intersection with right of way,0.387949
+10502,Traffic light,Cycle crossing,0.467059
+10546,Limit 30km,Traffic light,0.327926
+10562,Directions right and straight,Mandatory step to the right,0.705566
+10584,Snow,Dangerous right curve,0.790370
+10763,Intersection with right of way,Mandatory step to the right,0.603088
+10840,Intersection with right of way,Dangerous right curve,0.742210
+10866,Men at work,Pedestrian crossing,0.493346
+10878,Pedestrian crossing,Limit 30km,0.588903
+10931,Right of way,Transit prohibition,0.512191
+11036,Men at work,Intersection with right of way,0.997598
+11132,Men at work,Generic danger,0.946176
+11173,Snow,Traffic light,0.503978
+11366,Pedestrian crossing,Generic danger,0.455216
+11415,Pedestrian crossing,Generic danger,0.679429
+11431,Asymmetrical bottleneck,Generic danger,0.551786
+11459,Right of way,Limit 50km,0.304261
+11543,Right of way,Transit prohibition,0.996926
+11564,Snow,Traffic light,0.691787
+11616,Mandatory step to the right,Directions left and straight,0.966198
+11625,Traffic light,Danger of bumps,0.984076
+11650,Limit 60km,Limit 80km,0.470469
+11741,Left turn mandatory,Roundabout,0.841370
+11756,Right of way,Transit prohibition,0.998722
+11790,Limit 20km,Limit 120km,0.865846
+11833,Roundabout,Directions left and straight,0.671962
+11980,Limit 120km,Limit 60km,0.621571
+12024,Traffic light,Danger of bumps,0.619638
+12104,Asymmetrical bottleneck,Generic danger,0.430899
+12120,Men at work,Intersection with right of way,0.998220
+12135,Roundabout,Directions left and straight,0.781782
+12214,Right of way,Transit prohibition,0.893579
+12215,Wild animals,Generic danger,0.452065
+12226,Traffic light,Danger of bumps,0.980231
+12253,Asymmetrical bottleneck,Traffic light,0.433558
+12276,End of no overtaking of heavy vehicles,Intersection with right of way,0.384788
+12354,Traffic light,Danger of bumps,0.812413
+12396,Limit 60km,No overtaking of heavy vehicles,0.818546
+12518,Generic danger,Wild animals,0.999438
+12569,Intersection with right of way,Snow,0.503058
+12594,Right of way,Limit 50km,0.307309
+Test accuracy: 0.98432
+One-vs-One ROC AUC scores:
+0.999824 (macro),
+0.999876 (weighted by prevalence)
+One-vs-Rest ROC AUC scores:
+0.999890 (macro),
+0.999911 (weighted by prevalence)

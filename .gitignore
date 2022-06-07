@@ -7,7 +7,7 @@
 /labels.npy
 /labels_def.npy
 /utils/prove.ipynb
-/adv.ipynb
+/utils/adv.ipynb
 /explain.csv
 /utils/read.py
 /uncertainty.npy
@@ -22,10 +22,14 @@
 /pred1.csv
 /pred.csv
 /wrong.csv
-/wrong1.csv
+/wrong_explain.csv
 /uncertainty.py
+/data_train_def.pt
+/labels_train_def.pt
 /data_train_def_15000.pt
-/labels_train_def_15000.pt
+/labels_train.npy
+/data_train_def_20000.pt
+/labels_train_def_20000.pt
 /data_test_def.pt
 /labels_test_def.pt
 /explainability.py

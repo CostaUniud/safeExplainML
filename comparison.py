@@ -9,7 +9,7 @@ from captum.attr import IntegratedGradients
 
 # Model file to evaluate
 state_dict = 'model/model1.pth'
-state_dict2 = 'model2/model2.pth'
+state_dict2 = 'model2/model.pth'
 
 # Classes (43) which images belong to
 classes = ('Limit 20km', 'Limit 30km', 'Limit 50km', 'Limit 60km', 'Limit 70km', 'Limit 80km', 
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
   # Load the model from file
   model.load_state_dict(torch.load(state_dict))
-  model2.load_state_dict(torch.load(state_dict2))
+  model2.load_state_dict(torch.load(state_dict2, map_location=torch.device('cpu')))
 
   # Set the model 2 in evaluation mode
   model2.eval()
@@ -175,7 +175,7 @@ if __name__ == '__main__':
       probs2 = torch.softmax(out2, dim=1)
       conf2, pred_idxs2 = torch.max(probs2.data, 1)
 
-      # Check for incorrect predictions
+      # Check for correct predictions
       if (pred_idxs2 == y):
         # Write info about predction on CSV file
         output_file.write("%d,%s,%s,%f,%s,%f\n" % (idx, classes[y], classes[pred_idxs], conf, classes[pred_idxs2], conf2))
