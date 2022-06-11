@@ -269,5 +269,3 @@ Filename,ClassId,Pred_1,Conf_1,Pred_2,Conf_2
 12434,Prohibition of heavy vehicles transit,Prohibition of heavy vehicles transit,0.807751,Cycle crossing,0.861753
 12569,Intersection with right of way,Intersection with right of way,0.552285,Snow,0.998470
 12594,Right of way,Limit 50km,0.332938,Transit prohibition,0.841422
-Test accuracy: 0.98440
-Test accuracy model 2: 0.97268
