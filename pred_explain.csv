@@ -12629,10 +12629,3 @@ Filename,ClassId,Pred,Conf
 12627,No overtaking of heavy vehicles,No overtaking of heavy vehicles,1.000000
 12628,Generic danger,Generic danger,1.000000
 12629,No overtaking,No overtaking,1.000000
-Test accuracy: 0.97371
-One-vs-One ROC AUC scores:
-0.998142 (macro),
-0.998622 (weighted by prevalence)
-One-vs-Rest ROC AUC scores:
-0.998734 (macro),
-0.998923 (weighted by prevalence)

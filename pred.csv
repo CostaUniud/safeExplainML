@@ -12629,10 +12629,3 @@ Filename,ClassId,Pred,Conf
 12627,End limit 80km,End limit 80km,0.991241
 12628,Limit 100km,Limit 100km,0.999979
 12629,No overtaking of heavy vehicles,No overtaking of heavy vehicles,0.999999
-Test accuracy: 0.98432
-One-vs-One ROC AUC scores:
-0.999824 (macro),
-0.999876 (weighted by prevalence)
-One-vs-Rest ROC AUC scores:
-0.999890 (macro),
-0.999911 (weighted by prevalence)
